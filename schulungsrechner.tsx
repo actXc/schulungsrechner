@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { TrendingDown, Users, Euro, Download, ChevronDown, ChevronUp, HelpCircle } from 'lucide-react';
 
 export default function LernlinkKostenrechner() {
   const [mitarbeiter, setMitarbeiter] = useState(100);
@@ -94,7 +93,7 @@ export default function LernlinkKostenrechner() {
         onMouseEnter={() => setActiveTooltip(id)}
         onMouseLeave={() => setActiveTooltip(null)}
       >
-        <HelpCircle className="h-4 w-4" />
+        <span className="text-sm">❓</span>
       </button>
       {activeTooltip === id && (
         <div className="absolute z-50 w-64 p-3 bg-gray-900 text-white text-sm rounded-lg shadow-lg -top-2 left-8 transform -translate-y-full">
@@ -141,7 +140,7 @@ export default function LernlinkKostenrechner() {
           <div className="w-full lg:w-2/3">
             <div className="bg-white rounded-xl shadow-lg p-6">
               <h2 className="text-xl font-bold text-gray-800 mb-6 flex items-center">
-                <Users className="h-5 w-5 mr-2 text-blue-600" />
+                <span className="mr-2 text-blue-600">👥</span>
                 Ihre Unternehmensdaten
               </h2>
 
@@ -173,7 +172,7 @@ export default function LernlinkKostenrechner() {
                   className="flex items-center justify-between w-full text-left text-lg font-semibold text-gray-700 mb-4 hover:text-blue-600"
                 >
                   <span>Erweiterte Einstellungen</span>
-                  {showAdvanced ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
+                  {showAdvanced ? <span>▲</span> : <span>▼</span>}
                 </button>
 
                 {showAdvanced && (
@@ -332,7 +331,7 @@ export default function LernlinkKostenrechner() {
                   className="flex items-center justify-between w-full text-left text-lg font-semibold text-gray-700 mb-4 hover:text-blue-600"
                 >
                   <span>Unterweisungen ({unterweisungen.length} Themen)</span>
-                  {showUnterweisungen ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
+                  {showUnterweisungen ? <span>▲</span> : <span>▼</span>}
                 </button>
 
                 {showUnterweisungen && (
@@ -385,7 +384,7 @@ export default function LernlinkKostenrechner() {
           <div className="w-full lg:w-1/3">
             <div className="bg-white rounded-xl shadow-lg p-6">
               <h2 className="text-xl font-bold text-gray-800 mb-6 flex items-center">
-                <TrendingDown className="h-5 w-5 mr-2 text-green-600" />
+                <span className="mr-2 text-green-600">📉</span>
                 Live-Ergebnis
               </h2>
 
@@ -484,7 +483,7 @@ export default function LernlinkKostenrechner() {
                   💬 Kostenlose Beratung
                 </a>
                 <button className="w-full border border-blue-600 text-blue-600 hover:bg-blue-50 font-bold py-2 px-4 rounded-lg transition-colors text-sm flex items-center justify-center gap-2">
-                  <Download className="h-4 w-4" />
+                  <span>📄</span>
                   PDF-Report
                 </button>
               </div>
