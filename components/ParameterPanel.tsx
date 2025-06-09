@@ -3,6 +3,7 @@ import Tooltip from './Tooltip';
 import { formatEuro } from '../utils/calculations';
 
 const allowedDauerValues = [0, 0.5, 1, 2, 4, 6, 8];
+const fibonacciGroupSizes = [5, 8, 13, 21, 34, 55, 89, 144, 233, 377];
 
 export default function ParameterPanel({
   mitarbeiter,
@@ -111,13 +112,20 @@ export default function ParameterPanel({
                 </label>
                 <input
                   type="range"
-                  min="20"
-                  max="300"
-                  step="10"
-                  value={maxTeilnehmer}
-                  onChange={(e) => setMaxTeilnehmer(parseInt(e.target.value))}
+                  min="0"
+                  max={fibonacciGroupSizes.length - 1}
+                  step="1"
+                  value={fibonacciGroupSizes.indexOf(maxTeilnehmer)}
+                  onChange={(e) => setMaxTeilnehmer(fibonacciGroupSizes[parseInt(e.target.value)])}
                   className="slider-blue"
                 />
+                <div className="flex justify-between text-xs text-gray-500 mt-1 px-1">
+                  {fibonacciGroupSizes.map(val => (
+                    <span key={val} className={`text-center ${val === maxTeilnehmer ? 'font-bold text-blue-600' : ''}`}>
+                      {val}
+                    </span>
+                  ))}
+                </div>
               </div>
               <div>
                 <label className="flex items-center text-sm font-medium text-gray-700 mb-2">
