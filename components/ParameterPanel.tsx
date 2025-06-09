@@ -344,49 +344,52 @@ export default function ParameterPanel({
           {showUnterweisungen && (
             <div className="space-y-3">
               {unterweisungen.map((unterweisung, index) => (
-                <div key={index} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                <div key={index} className="flex flex-col gap-4 p-3 bg-gray-50 rounded-lg">
                   <input
                     type="text"
                     value={unterweisung.name}
                     onChange={(e) => updateUnterweisung(index, 'name', e.target.value)}
-                    className="flex-grow p-2 border border-gray-300 rounded text-sm"
+                    placeholder="Name der Unterweisung"
+                    className="w-full p-2 border border-gray-300 rounded text-sm bg-white"
                   />
-                  <div className="flex items-center gap-1">
-                    <label htmlFor={`dauer-${index}`} className="text-sm text-gray-600 sr-only">Dauer</label>
+                  <div className="w-full">
+                    <label htmlFor={`dauer-${index}`} className="text-sm font-medium text-gray-700 mb-1 block">Dauer pro Thema</label>
                     <select
                       id={`dauer-${index}`}
                       value={unterweisung.dauer}
                       onChange={(e) => updateUnterweisung(index, 'dauer', parseFloat(e.target.value))}
-                      className="w-24 p-2 border border-gray-300 rounded text-sm"
+                      className="w-full p-2 border border-gray-300 rounded text-sm bg-white"
                     >
                       {allowedDauerValues.map(val => (
                         <option key={val} value={val}>{val}h</option>
                       ))}
                     </select>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <label htmlFor={`kosten-${index}`} className="text-sm text-gray-600 sr-only">Kosten</label>
-                    <input
-                      id={`kosten-${index}`}
-                      type="number"
-                      value={unterweisung.kosten}
-                      onChange={(e) => updateUnterweisung(index, 'kosten', parseInt(e.target.value) || 0)}
-                      className="w-16 p-2 border border-gray-300 rounded text-sm text-center"
-                      min="0"
-                      max="200"
-                    />
-                    <span className="text-sm text-gray-600">€/MA</span>
+                  <div className="w-full">
+                    <label htmlFor={`kosten-${index}`} className="text-sm font-medium text-gray-700 mb-1 block">Kosten pro Thema/MA</label>
+                    <div className="flex items-center gap-2">
+                      <input
+                        id={`kosten-${index}`}
+                        type="number"
+                        value={unterweisung.kosten}
+                        onChange={(e) => updateUnterweisung(index, 'kosten', parseInt(e.target.value) || 0)}
+                        className="flex-grow p-2 border border-gray-300 rounded text-sm text-center bg-white"
+                        min="0"
+                        max="200"
+                      />
+                      <span className="text-sm text-gray-600">€/MA</span>
+                    </div>
                   </div>
                   <button
                     onClick={() => removeUnterweisung(index)}
                     disabled={unterweisungen.length <= 1}
-                    className={`px-2 py-1 rounded text-sm ${
+                    className={`px-3 py-2 rounded text-sm self-end ${
                       unterweisungen.length <= 1 
-                        ? 'bg-gray-200 text-gray-400' 
+                        ? 'bg-gray-200 text-gray-400 cursor-not-allowed' 
                         : 'bg-red-100 text-red-600 hover:bg-red-200'
                     }`}
                   >
-                    ✕
+                    ✕ Thema entfernen
                   </button>
                 </div>
               ))}
