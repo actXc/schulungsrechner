@@ -344,36 +344,36 @@ export default function ParameterPanel({
           {showUnterweisungen && (
             <div className="space-y-3">
               {unterweisungen.map((unterweisung, index) => (
-                <div key={index} className="flex flex-col gap-4 p-3 bg-gray-50 rounded-lg">
+                <div key={index} className="flex flex-col md:flex-row md:items-center gap-3 md:gap-2 p-3 bg-gray-50 rounded-lg">
                   <input
                     type="text"
                     value={unterweisung.name}
                     onChange={(e) => updateUnterweisung(index, 'name', e.target.value)}
                     placeholder="Name der Unterweisung"
-                    className="w-full p-2 border border-gray-300 rounded text-sm bg-white"
+                    className="w-full md:flex-grow p-2 border border-gray-300 rounded text-sm bg-white"
                   />
-                  <div className="w-full">
-                    <label htmlFor={`dauer-${index}`} className="text-sm font-medium text-gray-700 mb-1 block">Dauer pro Thema</label>
+                  <div className="w-full md:w-auto">
+                    <label htmlFor={`dauer-${index}`} className="text-sm font-medium text-gray-700 mb-1 block md:sr-only">Dauer pro Thema</label>
                     <select
                       id={`dauer-${index}`}
                       value={unterweisung.dauer}
                       onChange={(e) => updateUnterweisung(index, 'dauer', parseFloat(e.target.value))}
-                      className="w-full p-2 border border-gray-300 rounded text-sm bg-white"
+                      className="w-full md:w-24 p-2 border border-gray-300 rounded text-sm bg-white"
                     >
                       {allowedDauerValues.map(val => (
                         <option key={val} value={val}>{val}h</option>
                       ))}
                     </select>
                   </div>
-                  <div className="w-full">
-                    <label htmlFor={`kosten-${index}`} className="text-sm font-medium text-gray-700 mb-1 block">Kosten pro Thema/MA</label>
+                  <div className="w-full md:w-auto">
+                    <label htmlFor={`kosten-${index}`} className="text-sm font-medium text-gray-700 mb-1 block md:sr-only">Kosten pro Thema/MA</label>
                     <div className="flex items-center gap-2">
                       <input
                         id={`kosten-${index}`}
                         type="number"
                         value={unterweisung.kosten}
                         onChange={(e) => updateUnterweisung(index, 'kosten', parseInt(e.target.value) || 0)}
-                        className="flex-grow p-2 border border-gray-300 rounded text-sm text-center bg-white"
+                        className="w-full md:w-20 p-2 border border-gray-300 rounded text-sm text-center bg-white"
                         min="0"
                         max="200"
                       />
@@ -383,7 +383,7 @@ export default function ParameterPanel({
                   <button
                     onClick={() => removeUnterweisung(index)}
                     disabled={unterweisungen.length <= 1}
-                    className={`px-3 py-2 rounded text-sm self-end ${
+                    className={`px-3 py-2 rounded text-sm self-end md:self-center ${
                       unterweisungen.length <= 1 
                         ? 'bg-gray-200 text-gray-400 cursor-not-allowed' 
                         : 'bg-red-100 text-red-600 hover:bg-red-200'
