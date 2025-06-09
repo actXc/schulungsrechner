@@ -61,7 +61,7 @@ export default function LernlinkKostenrechner() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       <HeroSection />
       
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-2 md:px-4 py-8"> {/* Horizontalen Padding für kleine Bildschirme reduziert */}
         <div className="flex flex-row gap-8 max-w-7xl mx-auto"> {/* lg:flex-row zu flex-row geändert */}
           <ParameterPanel 
             mitarbeiter={mitarbeiter}
