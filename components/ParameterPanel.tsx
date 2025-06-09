@@ -230,7 +230,7 @@ export default function ParameterPanel({
             onClick={() => setShowUnterweisungen(!showUnterweisungen)}
             className="flex items-center justify-between w-full text-left text-lg font-semibold text-gray-700 mb-4 hover:text-blue-600"
           >
-            <span>Unterweisungen ({unterweisungen.length} Themen)</span>
+            <span>Unterweisungen ({unterweisungen.length} Themen, Gesamt: {unterweisungen.reduce((sum, u) => sum + u.dauer, 0)}h)</span>
             {showUnterweisungen ? <span>▲</span> : <span>▼</span>}
           </button>
 
