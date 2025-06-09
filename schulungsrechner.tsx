@@ -624,7 +624,7 @@ export default function LernlinkKostenrechner() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <div className="w-4 h-4 bg-orange-500 rounded"></div>
-                        <span>Zusatzkosten (>300 MA):</span>
+                        <span>Zusatzkosten (&gt;300 MA):</span>
                       </div>
                       <span className="font-medium">{formatEuro(ergebnisse.lmsZusatz || 0)}</span>
                     </div>
