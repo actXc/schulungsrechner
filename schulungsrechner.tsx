@@ -29,8 +29,16 @@ export default function LernlinkKostenrechner() {
   const [lmsAnschaffung, setLmsAnschaffung] = useState(3800);
   const [lmsHostingJahr, setLmsHostingJahr] = useState(1920);
   const [betrachtungszeitraum, setBetrachtungszeitraum] = useState(3);
-  const [raumkostenProTag, setRaumkostenProTag] = useState(150); // Neuer State, z.B. 150€ als Default
-  const [beruecksichtigeAusfallzeiten, setBeruecksichtigeAusfallzeiten] = useState(true); // Neuer State
+  const [raumkostenProTag, setRaumkostenProTag] = useState(150);
+  const [beruecksichtigeAusfallzeiten, setBeruecksichtigeAusfallzeiten] = useState(true);
+  
+  // States für Content-Kosten Modi
+  const [contentKostenModus, setContentKostenModus] = useState('kaufen'); // 'kaufen', 'machen', 'pauschale'
+  const [contentErstellungsStundenGesamt, setContentErstellungsStundenGesamt] = useState(40);
+  const [contentPflegeStundenJahrGesamt, setContentPflegeStundenJahrGesamt] = useState(8);
+  const [entwicklerStundensatz, setEntwicklerStundensatz] = useState(75);
+  const [contentPauschaleJahrGesamt, setContentPauschaleJahrGesamt] = useState(1000);
+
   const [ergebnisse, setErgebnisse] = useState({});
 
   useEffect(() => {
@@ -50,11 +58,22 @@ export default function LernlinkKostenrechner() {
       lmsAnschaffung,
       lmsHostingJahr,
       betrachtungszeitraum,
-      raumkostenProTag, // Neuer Parameter für die Berechnung
-      beruecksichtigeAusfallzeiten // Neuer Parameter für die Berechnung
+      raumkostenProTag,
+      beruecksichtigeAusfallzeiten,
+      // Neue Parameter für Content-Kosten
+      contentKostenModus,
+      contentErstellungsStundenGesamt,
+      contentPflegeStundenJahrGesamt,
+      entwicklerStundensatz,
+      contentPauschaleJahrGesamt
     });
     setErgebnisse(results);
-  }, [mitarbeiter, unterweisungen, maxTeilnehmer, trainerTagessatz, anreiseAnteil, fahrtkosten, mitarbeiterStundensatz, entlastungsfaktor, lmsAnschaffung, lmsHostingJahr, betrachtungszeitraum, raumkostenProTag, beruecksichtigeAusfallzeiten]);
+  }, [
+    mitarbeiter, unterweisungen, maxTeilnehmer, trainerTagessatz, anreiseAnteil, fahrtkosten, 
+    mitarbeiterStundensatz, entlastungsfaktor, lmsAnschaffung, lmsHostingJahr, betrachtungszeitraum, 
+    raumkostenProTag, beruecksichtigeAusfallzeiten, contentKostenModus, contentErstellungsStundenGesamt, 
+    contentPflegeStundenJahrGesamt, entwicklerStundensatz, contentPauschaleJahrGesamt
+  ]);
   // unterweisungsDauer aus den Dependencies entfernt
 
   return (
@@ -91,10 +110,21 @@ export default function LernlinkKostenrechner() {
             setLmsHostingJahr={setLmsHostingJahr}
             betrachtungszeitraum={betrachtungszeitraum}
             setBetrachtungszeitraum={setBetrachtungszeitraum}
-            raumkostenProTag={raumkostenProTag} // Prop hinzufügen
-            setRaumkostenProTag={setRaumkostenProTag} // Prop hinzufügen
-            beruecksichtigeAusfallzeiten={beruecksichtigeAusfallzeiten} // Prop hinzufügen
-            setBeruecksichtigeAusfallzeiten={setBeruecksichtigeAusfallzeiten} // Prop hinzufügen
+            raumkostenProTag={raumkostenProTag}
+            setRaumkostenProTag={setRaumkostenProTag}
+            beruecksichtigeAusfallzeiten={beruecksichtigeAusfallzeiten}
+            setBeruecksichtigeAusfallzeiten={setBeruecksichtigeAusfallzeiten}
+            // Props für Content-Kosten
+            contentKostenModus={contentKostenModus}
+            setContentKostenModus={setContentKostenModus}
+            contentErstellungsStundenGesamt={contentErstellungsStundenGesamt}
+            setContentErstellungsStundenGesamt={setContentErstellungsStundenGesamt}
+            contentPflegeStundenJahrGesamt={contentPflegeStundenJahrGesamt}
+            setContentPflegeStundenJahrGesamt={setContentPflegeStundenJahrGesamt}
+            entwicklerStundensatz={entwicklerStundensatz}
+            setEntwicklerStundensatz={setEntwicklerStundensatz}
+            contentPauschaleJahrGesamt={contentPauschaleJahrGesamt}
+            setContentPauschaleJahrGesamt={setContentPauschaleJahrGesamt}
           />
           <ErgebnisPanel 
             ergebnisse={ergebnisse} 
@@ -117,7 +147,13 @@ export default function LernlinkKostenrechner() {
           mitarbeiterStundensatz={mitarbeiterStundensatz}
           lmsAnschaffung={lmsAnschaffung}
           lmsHostingJahr={lmsHostingJahr}
-          beruecksichtigeAusfallzeiten={beruecksichtigeAusfallzeiten} // Prop hinzufügen
+          beruecksichtigeAusfallzeiten={beruecksichtigeAusfallzeiten}
+          // Props für Content-Kosten an DetailAnalyse
+          contentKostenModus={contentKostenModus}
+          contentErstellungsStundenGesamt={contentErstellungsStundenGesamt}
+          contentPflegeStundenJahrGesamt={contentPflegeStundenJahrGesamt}
+          entwicklerStundensatz={entwicklerStundensatz}
+          contentPauschaleJahrGesamt={contentPauschaleJahrGesamt}
         />
       </div>
       

@@ -15,7 +15,13 @@ export default function DetailAnalyse({
   mitarbeiterStundensatz, 
   lmsAnschaffung, 
   lmsHostingJahr,
-  beruecksichtigeAusfallzeiten // Neue Prop
+  beruecksichtigeAusfallzeiten,
+  // Neue Props für Content-Kosten
+  contentKostenModus,
+  contentErstellungsStundenGesamt, // Nicht direkt für Anzeige, aber evtl. für Tooltips später
+  contentPflegeStundenJahrGesamt,  // Nicht direkt für Anzeige, aber evtl. für Tooltips später
+  entwicklerStundensatz,          // Nicht direkt für Anzeige, aber evtl. für Tooltips später
+  contentPauschaleJahrGesamt     // Nicht direkt für Anzeige, aber evtl. für Tooltips später
 }) {
   return (
     <div className="detail-analyse">
@@ -149,13 +155,44 @@ export default function DetailAnalyse({
         <div className="legende-box legende-lms">
           <h4 className="font-semibold text-orange-800 mb-3">lern.link-LMS</h4>
           <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-orange-700 rounded"></div>
-                <span>Content-Kosten:</span>
+            {/* Dynamische Anzeige der Content-Kosten basierend auf Modus */}
+            {ergebnisse.contentKostenModusParameter === 'kaufen' && (
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 bg-orange-700 rounded"></div>
+                  <span>Content-Kosten (Kauf pro MA):</span>
+                </div>
+                <span className="font-medium">{formatEuro(ergebnisse.contentKostenKaufen || 0)}</span>
               </div>
-              <span className="font-medium">{formatEuro(ergebnisse.contentKostenGesamt || 0)}</span>
-            </div>
+            )}
+            {ergebnisse.contentKostenModusParameter === 'machen' && (
+              <>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 bg-orange-700 rounded"></div>
+                    <span>Content-Erstellung (amortisiert):</span>
+                  </div>
+                  <span className="font-medium">{formatEuro(ergebnisse.contentKostenMachenErstellungProJahr || 0)}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 bg-orange-700 rounded opacity-75"></div> {/* Leicht andere Farbe/Opazität für Pflege */}
+                    <span>Content-Pflege (jährlich):</span>
+                  </div>
+                  <span className="font-medium">{formatEuro(ergebnisse.contentKostenMachenPflegeJahr || 0)}</span>
+                </div>
+              </>
+            )}
+            {ergebnisse.contentKostenModusParameter === 'pauschale' && (
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 bg-orange-700 rounded"></div>
+                  <span>Content-Pauschale (jährlich):</span>
+                </div>
+                <span className="font-medium">{formatEuro(ergebnisse.contentKostenPauschale || 0)}</span>
+              </div>
+            )}
+            
             {ergebnisse.lmsZusatz > 0 && (
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
@@ -237,8 +274,15 @@ export default function DetailAnalyse({
           <div><strong>Zeitersparnis Online:</strong> {entlastungsfaktor}%</div>
           <div><strong>LMS-Anschaffung:</strong> {formatEuro(lmsAnschaffung)}</div>
           <div><strong>LMS-Hosting/Jahr:</strong> {formatEuro(lmsHostingJahr)}</div>
+          <div>
+            <strong>Content-Kosten Modus:</strong> 
+            <span className="capitalize ml-1">{ergebnisse.contentKostenModusParameter || 'kaufen'}</span>
+          </div>
           <div className="col-span-full pt-2 border-t border-gray-300 text-xs">
-            <strong>Unterweisungsthemen:</strong> {unterweisungen.map(u => `${u.name} (${u.kosten}€/MA)`).join(', ')}
+            <strong>Unterweisungsthemen (Name & Dauer):</strong> {unterweisungen.map(u => `${u.name} (${u.dauer}h)`).join(', ')}
+            {ergebnisse.contentKostenModusParameter === 'kaufen' && (
+              <span className="block mt-1"><strong>Kosten pro Thema/MA (nur bei Modus "Kaufen"):</strong> {unterweisungen.map(u => `${u.name} (${formatEuro(u.kosten)})`).join(', ')}</span>
+            )}
           </div>
         </div>
       </div>

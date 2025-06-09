@@ -12,8 +12,14 @@ export const berechneKosten = (params) => {
     lmsAnschaffung,
     lmsHostingJahr,
     betrachtungszeitraum,
-    raumkostenProTag, // Neuer Parameter
-    beruecksichtigeAusfallzeiten // Neuer Parameter
+    raumkostenProTag,
+    beruecksichtigeAusfallzeiten,
+    // Neue Parameter für Content-Kosten
+    contentKostenModus,
+    contentErstellungsStundenGesamt,
+    contentPflegeStundenJahrGesamt,
+    entwicklerStundensatz,
+    contentPauschaleJahrGesamt
   } = params;
 
   const themen = unterweisungen.length;
@@ -50,7 +56,26 @@ export const berechneKosten = (params) => {
   // LMS Kosten
   const lmsHosting = lmsHostingJahr;
   const lmsZusatz = mitarbeiter > 300 ? (mitarbeiter - 300) * 2.2 : 0;
-  const contentKostenGesamt = unterweisungen.reduce((sum, u) => sum + (mitarbeiter * u.kosten), 0);
+  
+  let contentKostenKaufen = 0;
+  let contentKostenMachenErstellungProJahr = 0;
+  let contentKostenMachenPflegeJahr = 0;
+  let contentKostenPauschale = 0;
+  let contentKostenGesamt = 0;
+
+  if (contentKostenModus === 'kaufen') {
+    contentKostenKaufen = unterweisungen.reduce((sum, u) => sum + (mitarbeiter * u.kosten), 0);
+    contentKostenGesamt = contentKostenKaufen;
+  } else if (contentKostenModus === 'machen') {
+    const erstellungsKostenEinmalig = contentErstellungsStundenGesamt * entwicklerStundensatz;
+    contentKostenMachenErstellungProJahr = betrachtungszeitraum > 0 ? erstellungsKostenEinmalig / betrachtungszeitraum : erstellungsKostenEinmalig;
+    contentKostenMachenPflegeJahr = contentPflegeStundenJahrGesamt * entwicklerStundensatz;
+    contentKostenGesamt = contentKostenMachenErstellungProJahr + contentKostenMachenPflegeJahr;
+  } else if (contentKostenModus === 'pauschale') {
+    contentKostenPauschale = contentPauschaleJahrGesamt;
+    contentKostenGesamt = contentKostenPauschale;
+  }
+  
   const lmsJahreslaufend = lmsHosting + lmsZusatz + contentKostenGesamt + ausfallzeitenLMS;
 
   // Mehrjahresberechnung
@@ -77,13 +102,20 @@ export const berechneKosten = (params) => {
     trainerKosten,
     fahrkostenGesamt,
     ausfallzeitenTraditionell,
-    ausfallzeitenLMS, // Bleibt für die Anzeige, wird aber 0 sein, wenn nicht berücksichtigt
+    ausfallzeitenLMS,
     lmsHosting,
     lmsZusatz,
-    contentKostenGesamt,
-    gesamteDurchgaenge, // Bezieht sich auf Trainer-Einsätze/Abrechnungseinheiten
-    gesamteRaumkosten, // Neu für die Detailanalyse
-    stundenTraditionell: aktuelleStundenTraditionell, // Angepasste Stunden
+    // Detaillierte Content-Kosten für Analyse
+    contentKostenGesamt, // Gesamt-Content-Kosten für die Hauptberechnung
+    contentKostenKaufen,
+    contentKostenMachenErstellungProJahr,
+    contentKostenMachenPflegeJahr,
+    contentKostenPauschale,
+    contentKostenModusParameter: contentKostenModus, // Um den Modus in der Analyse anzuzeigen
+
+    gesamteDurchgaenge,
+    gesamteRaumkosten,
+    stundenTraditionell: aktuelleStundenTraditionell,
     stundenLMS: aktuelleStundenLMS, // Angepasste Stunden
     betrachtungszeitraum,
     lmsAnschaffung,
