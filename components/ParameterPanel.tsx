@@ -4,6 +4,7 @@ import { formatEuro } from '../utils/calculations';
 
 const allowedDauerValues = [0, 0.5, 1, 2, 4, 6, 8];
 const fibonacciGroupSizes = [5, 10, 15, 25, 30, 55, 90, 150, 250, 400, 600, 1000];
+const mitarbeiterAnzahlSkala = [10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000, 25000];
 
 export default function ParameterPanel({
   mitarbeiter,
@@ -97,16 +98,16 @@ export default function ParameterPanel({
           </label>
           <input
             type="range"
-            min="10"
-            max="2000"
-            step="10"
-            value={mitarbeiter}
-            onChange={(e) => setMitarbeiter(parseInt(e.target.value))}
+            min="0"
+            max={mitarbeiterAnzahlSkala.length - 1}
+            step="1"
+            value={mitarbeiterAnzahlSkala.indexOf(mitarbeiter)}
+            onChange={(e) => setMitarbeiter(mitarbeiterAnzahlSkala[parseInt(e.target.value)])}
             className="w-full h-3 bg-blue-200 rounded-lg appearance-none cursor-pointer"
           />
           <div className="flex justify-between text-sm text-gray-500 mt-2">
-            <span>10</span>
-            <span>2.000</span>
+            <span>{mitarbeiterAnzahlSkala[0]}</span>
+            <span>{mitarbeiterAnzahlSkala[mitarbeiterAnzahlSkala.length - 1]}</span>
           </div>
         </div>
 
