@@ -206,14 +206,14 @@
   }
 }
 
-/* Neue Klassen für responsive Labels und Layouts unter 530px */
-.show-on-small-529 { display: none !important; } /* Standard: versteckt */
-.hide-on-small-529 { display: block !important; } /* Standard: sichtbar */
+/* Klasse für zusätzlichen Text bei breiteren Bildschirmen */
+.show-text-on-large { display: none; } /* Standard: versteckt */
+
+@media (min-width: 1024px) {
+  .show-text-on-large { display: inline; } /* Ab 1024px: sichtbar */
+}
 
 @media (max-width: 529px) {
-  .show-on-small-529 { display: block !important; } /* Auf kleinen Bildschirmen: sichtbar */
-  .hide-on-small-529 { display: none !important; } /* Auf kleinen Bildschirmen: versteckt */
-
   .key-metric-item-layout {
     flex-direction: column;
     align-items: center; /* Zentriert Label und Werte vertikal */

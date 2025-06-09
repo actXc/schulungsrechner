@@ -79,14 +79,14 @@ export default function ErgebnisPanel({ ergebnisse, betrachtungszeitraum, entlas
         {/* Key Metrics */}
         <div className="space-y-3 mb-6">
           <div className="flex justify-between items-center p-3 bg-gray-50 rounded key-metric-item-layout">
-            {/* Label für schmale Bildschirme (<530px) */}
-            <span className="text-sm text-gray-600 key-metric-label show-on-small-529">💰 / 👤 / Jahr:</span>
-            {/* Label für breitere Bildschirme (>=530px) */}
-            <span className="text-sm text-gray-600 key-metric-label hide-on-small-529">Kosten p. MA/Jahr:</span>
+            <span className="text-sm text-gray-600 key-metric-label">
+              <span>💰 👤 Jahr</span>
+              <span className="show-text-on-large"> (Kosten/Person/Jahr)</span>
+            </span>
             <div className="key-metric-values">
               <span className="font-bold text-blue-600">{formatEuro(ergebnisse.kostenProTeilnehmerTraditionellJahr || 0)}</span>
-              <span className="text-gray-500 mx-1">/</span>
-              <span className="font-bold text-orange-600">{formatEuro(ergebnisse.kostenProTeilnehmerLMSJahr || 0)}</span>
+              {/* Slash entfernt, Abstand zum nächsten Wert hinzugefügt */}
+              <span className="font-bold text-orange-600 ml-2">{formatEuro(ergebnisse.kostenProTeilnehmerLMSJahr || 0)}</span>
             </div>
           </div>
         </div>
