@@ -3,7 +3,7 @@ import Tooltip from './Tooltip';
 import { formatEuro } from '../utils/calculations';
 
 const allowedDauerValues = [0, 0.5, 1, 2, 4, 6, 8];
-const fibonacciGroupSizes = [5, 8, 13, 21, 34, 55, 89, 144, 233, 377];
+const fibonacciGroupSizes = [5, 10, 15, 25, 30, 55, 90, 150, 250, 400, 600, 1000];
 
 export default function ParameterPanel({
   mitarbeiter,

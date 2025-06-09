@@ -19,7 +19,7 @@ export default function LernlinkKostenrechner() {
   
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [showUnterweisungen, setShowUnterweisungen] = useState(false);
-  const [maxTeilnehmer, setMaxTeilnehmer] = useState(21); // Geändert von 25 auf 21
+  const [maxTeilnehmer, setMaxTeilnehmer] = useState(25); // Geändert von 21 auf 25
   const [trainerTagessatz, setTrainerTagessatz] = useState(1200);
   // unterweisungsDauer state wird entfernt
   const [anreiseAnteil, setAnreiseAnteil] = useState(5);
