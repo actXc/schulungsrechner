@@ -157,7 +157,7 @@ export default function DetailAnalyse({
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <div className="w-4 h-4 bg-orange-600 rounded"></div>
-                <span>LMS-Anschaffung: {formatEuro(ergebnisse.lmsAnschaffung || 0)}</span>
+                <span>LMS-Anschaffung: {formatEuro(ergebnisse.lmsAnschaffung || 0)} / {betrachtungszeitraum} J.</span>
               </div>
               <span className="font-medium">{formatEuro((ergebnisse.lmsAnschaffung || 0) / betrachtungszeitraum)}</span>
             </div>
