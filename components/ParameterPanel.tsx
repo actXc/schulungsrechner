@@ -385,8 +385,8 @@ export default function ParameterPanel({
                     disabled={unterweisungen.length <= 1}
                     className={`px-3 py-2 rounded text-sm self-end md:self-center ${
                       unterweisungen.length <= 1 
-                        ? 'bg-gray-200 text-gray-400 cursor-not-allowed' 
-                        : 'bg-red-100 text-red-600 hover:bg-red-200'
+                        ? 'text-gray-400 cursor-not-allowed' 
+                        : 'text-red-600 hover:text-red-700'
                     }`}
                   >
                     🗑️
