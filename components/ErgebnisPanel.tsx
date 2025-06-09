@@ -81,12 +81,6 @@ export default function ErgebnisPanel({ ergebnisse, betrachtungszeitraum, entlas
 
         {/* Key Metrics */}
         <div className="space-y-3 mb-6">
-          <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
-            <span className="text-sm text-gray-600">Kosteneinsparung:</span>
-            <span className="font-bold text-green-600">
-              {((Math.abs(ergebnisse.ersparnisJahr || 0)) / (ergebnisse.traditionellJahr || 1) * 100).toFixed(0)}%
-            </span>
-          </div>
           {ergebnisse.roiMonate > 0 && ergebnisse.roiMonate <= 36 && (
             <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
               <span className="text-sm text-gray-600">ROI erreicht nach:</span>
