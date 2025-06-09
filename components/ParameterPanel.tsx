@@ -90,6 +90,20 @@ export default function ParameterPanel({
           {showAdvanced && (
             <div className="parameter-grid">
               <div>
+                <label className="text-sm font-medium text-gray-700 mb-2 block">
+                  Betrachtungszeitraum: {betrachtungszeitraum} Jahre
+                </label>
+                <input
+                  type="range"
+                  min="1"
+                  max="5"
+                  step="1"
+                  value={betrachtungszeitraum}
+                  onChange={(e) => setBetrachtungszeitraum(parseInt(e.target.value))}
+                  className="slider-blue"
+                />
+              </div>
+              <div>
                 <label className="flex items-center text-sm font-medium text-gray-700 mb-2">
                   Gruppengröße Präsenz: {maxTeilnehmer} Personen
                   <Tooltip id="maxTeilnehmer" />
@@ -216,20 +230,6 @@ export default function ParameterPanel({
                   value={lmsHostingJahr}
                   onChange={(e) => setLmsHostingJahr(parseInt(e.target.value))}
                   className="slider-orange"
-                />
-              </div>
-              <div>
-                <label className="text-sm font-medium text-gray-700 mb-2 block">
-                  Betrachtungszeitraum: {betrachtungszeitraum} Jahre
-                </label>
-                <input
-                  type="range"
-                  min="1"
-                  max="5"
-                  step="1"
-                  value={betrachtungszeitraum}
-                  onChange={(e) => setBetrachtungszeitraum(parseInt(e.target.value))}
-                  className="slider-blue"
                 />
               </div>
             </div>
