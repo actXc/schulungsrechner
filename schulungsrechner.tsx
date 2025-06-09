@@ -10,11 +10,11 @@ import './styles/main.css';
 export default function LernlinkKostenrechner() {
   const [mitarbeiter, setMitarbeiter] = useState(100);
   const [unterweisungen, setUnterweisungen] = useState([
-    { name: 'Gleichstellungsgesetz', kosten: 5, dauer: 0.5 },
-    { name: 'Arbeitssicherheit', kosten: 5, dauer: 0.5 },
-    { name: 'Datenschutz', kosten: 5, dauer: 0.5 },
-    { name: 'IT-Security', kosten: 5, dauer: 0.5 },
-    { name: 'Brandschutz', kosten: 5, dauer: 0.5 }
+    { name: 'Gleichstellungsgesetz', kosten: 5, dauer: 0.5, erstellungsStunden: 8, pflegeStundenJahr: 1 },
+    { name: 'Arbeitssicherheit', kosten: 5, dauer: 0.5, erstellungsStunden: 8, pflegeStundenJahr: 1 },
+    { name: 'Datenschutz', kosten: 5, dauer: 0.5, erstellungsStunden: 10, pflegeStundenJahr: 2 },
+    { name: 'IT-Security', kosten: 5, dauer: 0.5, erstellungsStunden: 12, pflegeStundenJahr: 2 },
+    { name: 'Brandschutz', kosten: 5, dauer: 0.5, erstellungsStunden: 6, pflegeStundenJahr: 1 }
   ]);
   
   const [showAdvanced, setShowAdvanced] = useState(false);
@@ -34,8 +34,7 @@ export default function LernlinkKostenrechner() {
   
   // States für Content-Kosten Modi
   const [contentKostenModus, setContentKostenModus] = useState('kaufen'); // 'kaufen', 'machen', 'pauschale'
-  const [contentErstellungsStundenGesamt, setContentErstellungsStundenGesamt] = useState(40);
-  const [contentPflegeStundenJahrGesamt, setContentPflegeStundenJahrGesamt] = useState(8);
+  // contentErstellungsStundenGesamt und contentPflegeStundenJahrGesamt entfernt
   const [entwicklerStundensatz, setEntwicklerStundensatz] = useState(75);
   const [contentPauschaleJahrGesamt, setContentPauschaleJahrGesamt] = useState(1000);
 
@@ -60,10 +59,8 @@ export default function LernlinkKostenrechner() {
       betrachtungszeitraum,
       raumkostenProTag,
       beruecksichtigeAusfallzeiten,
-      // Neue Parameter für Content-Kosten
       contentKostenModus,
-      contentErstellungsStundenGesamt,
-      contentPflegeStundenJahrGesamt,
+      // contentErstellungsStundenGesamt, contentPflegeStundenJahrGesamt entfernt
       entwicklerStundensatz,
       contentPauschaleJahrGesamt
     });
@@ -71,8 +68,8 @@ export default function LernlinkKostenrechner() {
   }, [
     mitarbeiter, unterweisungen, maxTeilnehmer, trainerTagessatz, anreiseAnteil, fahrtkosten, 
     mitarbeiterStundensatz, entlastungsfaktor, lmsAnschaffung, lmsHostingJahr, betrachtungszeitraum, 
-    raumkostenProTag, beruecksichtigeAusfallzeiten, contentKostenModus, contentErstellungsStundenGesamt, 
-    contentPflegeStundenJahrGesamt, entwicklerStundensatz, contentPauschaleJahrGesamt
+    raumkostenProTag, beruecksichtigeAusfallzeiten, contentKostenModus, 
+    entwicklerStundensatz, contentPauschaleJahrGesamt // Abhängigkeiten aktualisiert
   ]);
   // unterweisungsDauer aus den Dependencies entfernt
 
@@ -114,13 +111,10 @@ export default function LernlinkKostenrechner() {
             setRaumkostenProTag={setRaumkostenProTag}
             beruecksichtigeAusfallzeiten={beruecksichtigeAusfallzeiten}
             setBeruecksichtigeAusfallzeiten={setBeruecksichtigeAusfallzeiten}
-            // Props für Content-Kosten
             contentKostenModus={contentKostenModus}
             setContentKostenModus={setContentKostenModus}
-            contentErstellungsStundenGesamt={contentErstellungsStundenGesamt}
-            setContentErstellungsStundenGesamt={setContentErstellungsStundenGesamt}
-            contentPflegeStundenJahrGesamt={contentPflegeStundenJahrGesamt}
-            setContentPflegeStundenJahrGesamt={setContentPflegeStundenJahrGesamt}
+            // contentErstellungsStundenGesamt, setContentErstellungsStundenGesamt entfernt
+            // contentPflegeStundenJahrGesamt, setContentPflegeStundenJahrGesamt entfernt
             entwicklerStundensatz={entwicklerStundensatz}
             setEntwicklerStundensatz={setEntwicklerStundensatz}
             contentPauschaleJahrGesamt={contentPauschaleJahrGesamt}
@@ -148,10 +142,8 @@ export default function LernlinkKostenrechner() {
           lmsAnschaffung={lmsAnschaffung}
           lmsHostingJahr={lmsHostingJahr}
           beruecksichtigeAusfallzeiten={beruecksichtigeAusfallzeiten}
-          // Props für Content-Kosten an DetailAnalyse
           contentKostenModus={contentKostenModus}
-          contentErstellungsStundenGesamt={contentErstellungsStundenGesamt}
-          contentPflegeStundenJahrGesamt={contentPflegeStundenJahrGesamt}
+          // contentErstellungsStundenGesamt, contentPflegeStundenJahrGesamt entfernt
           entwicklerStundensatz={entwicklerStundensatz}
           contentPauschaleJahrGesamt={contentPauschaleJahrGesamt}
         />

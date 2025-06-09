@@ -14,10 +14,8 @@ export const berechneKosten = (params) => {
     betrachtungszeitraum,
     raumkostenProTag,
     beruecksichtigeAusfallzeiten,
-    // Neue Parameter für Content-Kosten
     contentKostenModus,
-    contentErstellungsStundenGesamt,
-    contentPflegeStundenJahrGesamt,
+    // contentErstellungsStundenGesamt, contentPflegeStundenJahrGesamt entfernt
     entwicklerStundensatz,
     contentPauschaleJahrGesamt
   } = params;
@@ -67,9 +65,12 @@ export const berechneKosten = (params) => {
     contentKostenKaufen = unterweisungen.reduce((sum, u) => sum + (mitarbeiter * u.kosten), 0);
     contentKostenGesamt = contentKostenKaufen;
   } else if (contentKostenModus === 'machen') {
-    const erstellungsKostenEinmalig = contentErstellungsStundenGesamt * entwicklerStundensatz;
+    const sumErstellungsStunden = unterweisungen.reduce((sum, u) => sum + (u.erstellungsStunden || 0), 0);
+    const sumPflegeStundenJahr = unterweisungen.reduce((sum, u) => sum + (u.pflegeStundenJahr || 0), 0);
+    
+    const erstellungsKostenEinmalig = sumErstellungsStunden * entwicklerStundensatz;
     contentKostenMachenErstellungProJahr = betrachtungszeitraum > 0 ? erstellungsKostenEinmalig / betrachtungszeitraum : erstellungsKostenEinmalig;
-    contentKostenMachenPflegeJahr = contentPflegeStundenJahrGesamt * entwicklerStundensatz;
+    contentKostenMachenPflegeJahr = sumPflegeStundenJahr * entwicklerStundensatz;
     contentKostenGesamt = contentKostenMachenErstellungProJahr + contentKostenMachenPflegeJahr;
   } else if (contentKostenModus === 'pauschale') {
     contentKostenPauschale = contentPauschaleJahrGesamt;

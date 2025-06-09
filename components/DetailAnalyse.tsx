@@ -16,12 +16,10 @@ export default function DetailAnalyse({
   lmsAnschaffung, 
   lmsHostingJahr,
   beruecksichtigeAusfallzeiten,
-  // Neue Props für Content-Kosten
   contentKostenModus,
-  contentErstellungsStundenGesamt, // Nicht direkt für Anzeige, aber evtl. für Tooltips später
-  contentPflegeStundenJahrGesamt,  // Nicht direkt für Anzeige, aber evtl. für Tooltips später
-  entwicklerStundensatz,          // Nicht direkt für Anzeige, aber evtl. für Tooltips später
-  contentPauschaleJahrGesamt     // Nicht direkt für Anzeige, aber evtl. für Tooltips später
+  // contentErstellungsStundenGesamt, contentPflegeStundenJahrGesamt entfernt
+  entwicklerStundensatz,
+  contentPauschaleJahrGesamt
 }) {
   return (
     <div className="detail-analyse">
@@ -281,7 +279,10 @@ export default function DetailAnalyse({
           <div className="col-span-full pt-2 border-t border-gray-300 text-xs">
             <strong>Unterweisungsthemen (Name & Dauer):</strong> {unterweisungen.map(u => `${u.name} (${u.dauer}h)`).join(', ')}
             {ergebnisse.contentKostenModusParameter === 'kaufen' && (
-              <span className="block mt-1"><strong>Kosten pro Thema/MA (nur bei Modus "Kaufen"):</strong> {unterweisungen.map(u => `${u.name} (${formatEuro(u.kosten)})`).join(', ')}</span>
+              <span className="block mt-1"><strong>Kosten pro Thema/MA (Modus "Kaufen"):</strong> {unterweisungen.map(u => `${u.name} (${formatEuro(u.kosten)})`).join(', ')}</span>
+            )}
+            {ergebnisse.contentKostenModusParameter === 'machen' && (
+              <span className="block mt-1"><strong>Erstellung/Pflege (Modus "Machen"):</strong> {unterweisungen.map(u => `${u.name} (${u.erstellungsStunden || 0}h Einm. / ${u.pflegeStundenJahr || 0}h Jahr)`).join(', ')}</span>
             )}
           </div>
         </div>

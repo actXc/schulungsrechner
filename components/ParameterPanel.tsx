@@ -39,13 +39,10 @@ export default function ParameterPanel({
   setRaumkostenProTag,
   beruecksichtigeAusfallzeiten,
   setBeruecksichtigeAusfallzeiten,
-  // Props für Content-Kosten
   contentKostenModus,
   setContentKostenModus,
-  contentErstellungsStundenGesamt,
-  setContentErstellungsStundenGesamt,
-  contentPflegeStundenJahrGesamt,
-  setContentPflegeStundenJahrGesamt,
+  // contentErstellungsStundenGesamt, setContentErstellungsStundenGesamt entfernt
+  // contentPflegeStundenJahrGesamt, setContentPflegeStundenJahrGesamt entfernt
   entwicklerStundensatz,
   setEntwicklerStundensatz,
   contentPauschaleJahrGesamt,
@@ -81,7 +78,7 @@ export default function ParameterPanel({
   }, [maxTeilnehmer, raumkostenProTag, setRaumkostenProTag]);
 
   const addUnterweisung = () => {
-    setUnterweisungen([...unterweisungen, { name: 'Neue Unterweisung', kosten: 5, dauer: 0.5 }]); // Standarddauer für neue Unterweisung
+    setUnterweisungen([...unterweisungen, { name: 'Neue Unterweisung', kosten: 5, dauer: 0.5, erstellungsStunden: 8, pflegeStundenJahr: 1 }]);
   };
 
   const removeUnterweisung = (index) => {
@@ -370,33 +367,36 @@ export default function ParameterPanel({
                 ))}
               </div>
 
-              {/* Modus-spezifische Eingabefelder */}
+              {/* Modus-spezifische Eingabefelder und Unterweisungsliste */}
               <div className="p-1">
-                {contentKostenModus === 'kaufen' && (
-                  <div className="space-y-3">
-                    <p className="text-xs text-gray-600">Definieren Sie hier die Kosten pro Mitarbeiter für jede gekaufte Online-Unterweisung.</p>
-                    {unterweisungen.map((unterweisung, index) => (
-                      <div key={index} className="flex flex-col md:flex-row md:items-center gap-3 md:gap-2 p-3 bg-gray-50 rounded-lg">
-                        <input
-                          type="text"
-                          value={unterweisung.name}
-                          onChange={(e) => updateUnterweisung(index, 'name', e.target.value)}
-                          placeholder="Name der Unterweisung"
-                          className="w-full md:flex-grow p-2 border border-gray-300 rounded text-sm bg-white"
-                        />
-                        <div className="w-full md:w-auto">
-                          <label htmlFor={`dauer-${index}`} className="text-sm font-medium text-gray-700 mb-1 block md:sr-only">Dauer pro Thema</label>
-                          <select
-                            id={`dauer-${index}`}
-                            value={unterweisung.dauer}
-                            onChange={(e) => updateUnterweisung(index, 'dauer', parseFloat(e.target.value))}
-                            className="w-full md:w-24 p-2 border border-gray-300 rounded text-sm bg-white"
-                          >
-                            {allowedDauerValues.map(val => (
-                              <option key={val} value={val}>{val}h</option>
-                            ))}
-                          </select>
-                        </div>
+                {/* Unterweisungsliste wird jetzt hier gerendert, Inhalt variiert je nach Modus */}
+                <div className="space-y-3 mb-4">
+                  {unterweisungen.map((unterweisung, index) => (
+                    <div key={index} className="flex flex-col md:flex-row md:items-start gap-3 md:gap-2 p-3 bg-gray-50 rounded-lg">
+                      {/* Name und Dauer immer sichtbar */}
+                      <input
+                        type="text"
+                        value={unterweisung.name}
+                        onChange={(e) => updateUnterweisung(index, 'name', e.target.value)}
+                        placeholder="Name der Unterweisung"
+                        className="w-full md:flex-grow p-2 border border-gray-300 rounded text-sm bg-white"
+                      />
+                      <div className="w-full md:w-auto">
+                        <label htmlFor={`dauer-${index}`} className="text-sm font-medium text-gray-700 mb-1 block md:sr-only">Dauer pro Thema</label>
+                        <select
+                          id={`dauer-${index}`}
+                          value={unterweisung.dauer}
+                          onChange={(e) => updateUnterweisung(index, 'dauer', parseFloat(e.target.value))}
+                          className="w-full md:w-24 p-2 border border-gray-300 rounded text-sm bg-white"
+                        >
+                          {allowedDauerValues.map(val => (
+                            <option key={val} value={val}>{val}h</option>
+                          ))}
+                        </select>
+                      </div>
+
+                      {/* Modus "kaufen": Kosten pro MA */}
+                      {contentKostenModus === 'kaufen' && (
                         <div className="w-full md:w-auto">
                           <label htmlFor={`kosten-${index}`} className="text-sm font-medium text-gray-700 mb-1 block md:sr-only">Kosten pro Thema/MA</label>
                           <div className="flex items-center gap-2">
@@ -412,35 +412,68 @@ export default function ParameterPanel({
                             <span className="text-sm text-gray-600">€/MA</span>
                           </div>
                         </div>
-                        <button
-                          onClick={() => removeUnterweisung(index)}
-                          disabled={unterweisungen.length <= 1}
-                          className={`px-3 py-2 rounded text-sm self-end md:self-center ${
-                            unterweisungen.length <= 1 
-                              ? 'text-gray-400 cursor-not-allowed' 
-                              : 'text-red-600 hover:text-red-700'
-                          }`}
-                        >
-                          🗑️
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                )}
+                      )}
 
+                      {/* Modus "machen": Erstellungs- und Pflegestunden */}
+                      {contentKostenModus === 'machen' && (
+                        <>
+                          <div className="w-full md:w-auto">
+                            <label htmlFor={`erstellung-${index}`} className="text-sm font-medium text-gray-700 mb-1 block md:sr-only">Erstellung</label>
+                            <div className="flex items-center gap-1">
+                              <input
+                                id={`erstellung-${index}`}
+                                type="number"
+                                value={unterweisung.erstellungsStunden}
+                                onChange={(e) => updateUnterweisung(index, 'erstellungsStunden', parseInt(e.target.value) || 0)}
+                                className="w-16 p-2 border border-gray-300 rounded text-sm text-center bg-white"
+                                min="0"
+                              />
+                              <span className="text-xs text-gray-500">h Einm.</span>
+                            </div>
+                          </div>
+                          <div className="w-full md:w-auto">
+                            <label htmlFor={`pflege-${index}`} className="text-sm font-medium text-gray-700 mb-1 block md:sr-only">Pflege</label>
+                            <div className="flex items-center gap-1">
+                              <input
+                                id={`pflege-${index}`}
+                                type="number"
+                                value={unterweisung.pflegeStundenJahr}
+                                onChange={(e) => updateUnterweisung(index, 'pflegeStundenJahr', parseInt(e.target.value) || 0)}
+                                className="w-16 p-2 border border-gray-300 rounded text-sm text-center bg-white"
+                                min="0"
+                              />
+                              <span className="text-xs text-gray-500">h/Jahr</span>
+                            </div>
+                          </div>
+                        </>
+                      )}
+                      
+                      {/* Leerraum-Platzhalter für Modi 'machen' und 'pauschale', um Layoutkonsistenz mit 'kaufen' zu wahren, falls Kosten/MA-Feld fehlt */}
+                      {(contentKostenModus === 'machen' || contentKostenModus === 'pauschale') && (
+                         <div className="w-full md:w-auto md:min-w-[calc(5rem+0.5rem+3rem)]"> {/* Ungefähre Breite des Kosten/MA Blocks */}
+                         </div>
+                      )}
+
+
+                      <button
+                        onClick={() => removeUnterweisung(index)}
+                        disabled={unterweisungen.length <= 1}
+                        className={`px-3 py-2 rounded text-sm self-end md:self-center ${
+                          unterweisungen.length <= 1 
+                            ? 'text-gray-400 cursor-not-allowed' 
+                            : 'text-red-600 hover:text-red-700'
+                        }`}
+                      >
+                        🗑️
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                
+                {/* Spezifische Felder für "machen" (nur Entwicklerstundensatz global) und "pauschale" */}
                 {contentKostenModus === 'machen' && (
                   <div className="space-y-4 p-3 bg-gray-50 rounded-lg">
-                    <p className="text-xs text-gray-600">Geben Sie hier die Aufwände für die Erstellung und jährliche Pflege aller Online-Unterweisungen an.</p>
-                    <div>
-                      <label className="text-sm font-medium text-gray-700 mb-1 block">Gesamte Erstellungsstunden (einmalig): {contentErstellungsStundenGesamt}h</label>
-                      <input type="range" min="0" max="500" step="10" value={contentErstellungsStundenGesamt} onChange={(e) => setContentErstellungsStundenGesamt(parseInt(e.target.value))} className="slider-orange" />
-                      <div className="flex justify-between text-xs text-gray-500 mt-1 px-1"><span>0h</span><span>500h</span></div>
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium text-gray-700 mb-1 block">Gesamte Pflegestunden (jährlich): {contentPflegeStundenJahrGesamt}h</label>
-                      <input type="range" min="0" max="100" step="2" value={contentPflegeStundenJahrGesamt} onChange={(e) => setContentPflegeStundenJahrGesamt(parseInt(e.target.value))} className="slider-orange" />
-                      <div className="flex justify-between text-xs text-gray-500 mt-1 px-1"><span>0h</span><span>100h</span></div>
-                    </div>
+                     <p className="text-xs text-gray-600">Definieren Sie oben pro Thema die Erstellungs- und Pflegeaufwände. Hier der globale Stundensatz dafür.</p>
                     <div>
                       <label className="text-sm font-medium text-gray-700 mb-1 block">Stundensatz Entwickler: {formatEuro(entwicklerStundensatz)}</label>
                       <input type="range" min="30" max="150" step="5" value={entwicklerStundensatz} onChange={(e) => setEntwicklerStundensatz(parseInt(e.target.value))} className="slider-orange" />
@@ -451,7 +484,7 @@ export default function ParameterPanel({
 
                 {contentKostenModus === 'pauschale' && (
                   <div className="space-y-4 p-3 bg-gray-50 rounded-lg">
-                    <p className="text-xs text-gray-600">Geben Sie hier eine jährliche Pauschale für alle Online-Unterweisungen an.</p>
+                    <p className="text-xs text-gray-600">Geben Sie hier eine jährliche Pauschale für alle Online-Unterweisungen an. Die oben definierten Themen (Name & Dauer) sind weiterhin für die Berechnung der Ausfallzeiten relevant.</p>
                     <div>
                       <label className="text-sm font-medium text-gray-700 mb-1 block">Content-Pauschale (jährlich): {formatEuro(contentPauschaleJahrGesamt)}</label>
                       <input type="range" min="0" max="10000" step="100" value={contentPauschaleJahrGesamt} onChange={(e) => setContentPauschaleJahrGesamt(parseInt(e.target.value))} className="slider-orange" />
@@ -461,7 +494,6 @@ export default function ParameterPanel({
                 )}
               </div>
               
-              {/* Button zum Hinzufügen von Unterweisungsthemen (Name/Dauer) bleibt immer sichtbar */}
               <button
                 onClick={addUnterweisung}
                 className="w-full p-3 border-2 border-dashed border-blue-300 rounded-lg text-blue-600 hover:bg-blue-50 text-sm font-medium"
