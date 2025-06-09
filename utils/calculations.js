@@ -23,10 +23,13 @@ export const berechneKosten = (params) => {
   const trainerKosten = gesamteDurchgaenge * trainerTagessatz; // Annahme: gesamteDurchgaenge ist Anzahl Trainer-Tage
   const fahrkostenGesamt = gesamteDurchgaenge * (maxTeilnehmer * anreiseAnteil / 100) * fahrtkosten; // Annahme: Fahrtkosten pro Trainer-Einsatz/Tag
 
-  const durchgaengeProThemaFuerRaum = Math.ceil(mitarbeiter / maxTeilnehmer);
-  // Berechne die Anzahl der benötigten Raumtage basierend auf der Dauer jeder einzelnen Unterweisung (max 4h pro Tag)
-  const sumOfRoomDaysNeededPerEmployee = unterweisungen.reduce((acc, u) => acc + Math.ceil(u.dauer / 4), 0);
-  const gesamteRaumTage = durchgaengeProThemaFuerRaum * sumOfRoomDaysNeededPerEmployee;
+  // Neue Berechnung für Raumkosten:
+  // gesamteUnterweisungsDauer ist die Summe der Stunden, die ein Mitarbeiter pro Jahr geschult wird.
+  // Ein Raumtag kann maximal 6 Stunden Schulung beinhalten.
+  const stundenProGruppe = gesamteUnterweisungsDauer;
+  const raumTageProGruppe = Math.ceil(stundenProGruppe / 6); // Benötigte Raumtage pro Gruppe
+  const anzahlGruppen = Math.ceil(mitarbeiter / maxTeilnehmer); // Anzahl der Gruppen
+  const gesamteRaumTage = raumTageProGruppe * anzahlGruppen; // Gesamte Raumtage über alle Gruppen
   const gesamteRaumkosten = gesamteRaumTage * raumkostenProTag;
   
   const ausfallzeitenTraditionell = mitarbeiter * gesamteUnterweisungsDauer * mitarbeiterStundensatz;
