@@ -46,7 +46,8 @@ export const berechneKosten = (params) => {
   const stundenLMS = mitarbeiter * themen * unterweisungsDauer * (100 - entlastungsfaktor) / 100;
 
   const kostenProTeilnehmerTraditionellJahr = mitarbeiter > 0 ? traditionellJahr / mitarbeiter : 0;
-  const kostenProTeilnehmerLMSJahr = mitarbeiter > 0 ? lmsJahreslaufend / mitarbeiter : 0;
+  const lmsAnschaffungProJahr = betrachtungszeitraum > 0 ? lmsAnschaffung / betrachtungszeitraum : lmsAnschaffung;
+  const kostenProTeilnehmerLMSJahr = mitarbeiter > 0 ? (lmsJahreslaufend + lmsAnschaffungProJahr) / mitarbeiter : 0;
 
   return {
     traditionellJahr,
