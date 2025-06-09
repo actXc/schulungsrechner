@@ -163,6 +163,25 @@ export default function ParameterPanel({
                 </div>
               </div>
               <div>
+                <label className="text-sm font-medium text-gray-700 mb-2 block">
+                  Raumkosten pro Tag: {formatEuro(raumkostenProTag)}
+                  <Tooltip id="raumkostenProTag" />
+                </label>
+                <input
+                  type="range"
+                  min={currentRaumkostenRange.min}
+                  max={currentRaumkostenRange.max}
+                  step="10" 
+                  value={raumkostenProTag}
+                  onChange={(e) => setRaumkostenProTag(parseInt(e.target.value))}
+                  className="slider-blue"
+                />
+                <div className="flex justify-between text-xs text-gray-500 mt-1 px-1">
+                  <span>{formatEuro(currentRaumkostenRange.min)}</span>
+                  <span>{formatEuro(currentRaumkostenRange.max)}</span>
+                </div>
+              </div>
+              <div>
                 <label className="flex items-center text-sm font-medium text-gray-700 mb-2">
                   Trainer-Tagessatz: {formatEuro(trainerTagessatz)}
                   <Tooltip id="trainerTagessatz" />
@@ -289,25 +308,6 @@ export default function ParameterPanel({
                 <div className="flex justify-between text-xs text-gray-500 mt-1 px-1">
                   <span>{formatEuro(0)}</span>
                   <span>{formatEuro(12000)}</span>
-                </div>
-              </div>
-              <div>
-                <label className="text-sm font-medium text-gray-700 mb-2 block">
-                  Raumkosten pro Tag: {formatEuro(raumkostenProTag)}
-                  <Tooltip id="raumkostenProTag" />
-                </label>
-                <input
-                  type="range"
-                  min={currentRaumkostenRange.min}
-                  max={currentRaumkostenRange.max}
-                  step="10" 
-                  value={raumkostenProTag}
-                  onChange={(e) => setRaumkostenProTag(parseInt(e.target.value))}
-                  className="slider-blue"
-                />
-                <div className="flex justify-between text-xs text-gray-500 mt-1 px-1">
-                  <span>{formatEuro(currentRaumkostenRange.min)}</span>
-                  <span>{formatEuro(currentRaumkostenRange.max)}</span>
                 </div>
               </div>
             </div>
