@@ -81,19 +81,13 @@ export default function ErgebnisPanel({ ergebnisse, betrachtungszeitraum, entlas
 
         {/* Key Metrics */}
         <div className="space-y-3 mb-6">
-          {ergebnisse.roiMonate > 0 && ergebnisse.roiMonate <= 36 && (
-            <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
-              <span className="text-sm text-gray-600">ROI erreicht nach:</span>
-              <span className="font-bold text-blue-600">{ergebnisse.roiMonate} Monaten</span>
+          <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
+            <span className="text-sm text-gray-600">Kosten/MA/Jahr:</span>
+            <div>
+              <span className="font-bold text-blue-600">{formatEuro(ergebnisse.kostenProTeilnehmerTraditionellJahr || 0)}</span>
+              <span className="text-gray-500 mx-1">/</span>
+              <span className="font-bold text-orange-600">{formatEuro(ergebnisse.kostenProTeilnehmerLMSJahr || 0)}</span>
             </div>
-          )}
-          <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
-            <span className="text-sm text-gray-600">Kosten/MA/Jahr (Traditionell):</span>
-            <span className="font-bold text-blue-600">{formatEuro(ergebnisse.kostenProTeilnehmerTraditionellJahr || 0)}</span>
-          </div>
-          <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
-            <span className="text-sm text-gray-600">Kosten/MA/Jahr (LMS):</span>
-            <span className="font-bold text-orange-600">{formatEuro(ergebnisse.kostenProTeilnehmerLMSJahr || 0)}</span>
           </div>
         </div>
 
