@@ -37,19 +37,21 @@ export default function ErgebnisPanel({ ergebnisse, betrachtungszeitraum, entlas
         <div className="mb-6">
           <h3 className="text-sm font-semibold mb-4 text-center hide-bars-on-small-screens">Kostenvergleich (jährlich)</h3>
           
-          <div className="flex justify-center items-end gap-3 mb-4">
+          <div className="flex justify-around items-end gap-2 mb-4"> {/* Geändert zu justify-around und gap-2 */}
+            {/* Traditionell Block */}
             <div className="flex flex-col items-center hide-bars-on-small-screens">
               <div className="text-xs font-semibold text-gray-700 mb-1">Traditionell</div>
-              <div className="text-sm font-bold text-blue-800 mb-2">
+              <div className="w-12 bg-blue-400 rounded" style={{ height: '80px' }}></div>
+              <div className="text-sm font-bold text-blue-800 mt-2">
                 {formatEuro(ergebnisse.traditionellJahr || 0)}
               </div>
-              <div className="w-12 bg-blue-400 rounded" style={{ height: '80px' }}></div>
             </div>
 
-            <div className="flex flex-col items-center justify-center pb-8">
-              <div className="text-lg font-bold text-gray-400 mb-2">VS</div>
-              <div className="text-xs text-gray-500 text-center">
-                Ersparnis:<br/>
+            {/* Ersparnis Block (mittig) */}
+            <div className="flex flex-col items-center justify-center text-center"> {/* pb-8 entfernt, text-center hinzugefügt */}
+              <div className="text-lg font-bold text-gray-400 mb-1">VS</div> {/* mb-1 statt mb-2 */}
+              <div className="text-xs text-gray-500">
+                <span className="text-xl">💰</span><br/> {/* Symbol für Ersparnis */}
                 <span className="font-bold text-green-600">
                   {formatEuro(ergebnisse.ersparnisJahr || 0)}
                 </span>
@@ -61,17 +63,18 @@ export default function ErgebnisPanel({ ergebnisse, betrachtungszeitraum, entlas
               </div>
             </div>
 
+            {/* lern.link LMS Block */}
             <div className="flex flex-col items-center hide-bars-on-small-screens">
               <div className="text-xs font-semibold text-gray-700 mb-1">lern.link LMS</div>
-              <div className="text-sm font-bold text-orange-800 mb-2">
-                {formatEuro((ergebnisse.lmsJahreslaufend || 0) + ((ergebnisse.lmsAnschaffung || 0) / betrachtungszeitraum))}
-              </div>
               <div 
                 className="w-12 bg-orange-400 rounded transition-all duration-300"
                 style={{ 
                   height: `${Math.max((((ergebnisse.lmsJahreslaufend || 0) + ((ergebnisse.lmsAnschaffung || 0) / betrachtungszeitraum)) / (ergebnisse.traditionellJahr || 1)) * 80, 20)}px`
                 }}
               ></div>
+              <div className="text-sm font-bold text-orange-800 mt-2">
+                {formatEuro((ergebnisse.lmsJahreslaufend || 0) + ((ergebnisse.lmsAnschaffung || 0) / betrachtungszeitraum))}
+              </div>
             </div>
           </div>
         </div>
