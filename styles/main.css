@@ -54,6 +54,12 @@
   }
 }
 
+@media (min-width: 800px) {
+  .parameter-grid {
+    grid-template-columns: 1fr; /* Ab 800px Breite wieder einspaltig */
+  }
+}
+
 /* Slider Styles */
 .slider-blue {
   width: 100%;
