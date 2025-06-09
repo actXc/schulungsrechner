@@ -5,6 +5,7 @@ import { formatEuro } from '../utils/calculations';
 const allowedDauerValues = [0, 0.5, 1, 2, 4, 6, 8];
 const fibonacciGroupSizes = [5, 10, 15, 25, 30, 55, 90, 150, 250, 400, 600, 1000];
 const mitarbeiterAnzahlSkala = [10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000, 25000];
+const mitarbeiterStundensatzSkala = [0, 10, 20, 30, 45, 60, 80, 100, 125, 150];
 
 export default function ParameterPanel({
   mitarbeiter,
@@ -255,17 +256,20 @@ export default function ParameterPanel({
                 </label>
                 <input
                   type="range"
-                  min="40"
-                  max="100"
-                  step="5"
-                  value={mitarbeiterStundensatz}
-                  onChange={(e) => setMitarbeiterStundensatz(parseInt(e.target.value))}
+                  min="0"
+                  max={mitarbeiterStundensatzSkala.length - 1}
+                  step="1"
+                  value={mitarbeiterStundensatzSkala.indexOf(mitarbeiterStundensatz)}
+                  onChange={(e) => setMitarbeiterStundensatz(mitarbeiterStundensatzSkala[parseInt(e.target.value)])}
                   className={`slider-blue ${!beruecksichtigeAusfallzeiten ? 'opacity-50 cursor-not-allowed' : ''}`}
                   disabled={!beruecksichtigeAusfallzeiten}
                 />
                 <div className={`flex justify-between text-xs text-gray-500 mt-1 px-1 ${!beruecksichtigeAusfallzeiten ? 'opacity-50' : ''}`}>
-                  <span>{formatEuro(40)}</span>
-                  <span>{formatEuro(100)}</span>
+                  {mitarbeiterStundensatzSkala.map(val => (
+                    <span key={val} className={`text-center ${val === mitarbeiterStundensatz && beruecksichtigeAusfallzeiten ? 'font-bold text-blue-600' : ''}`}>
+                      {formatEuro(val)}
+                    </span>
+                  ))}
                 </div>
               </div>
               <div>
