@@ -3,7 +3,7 @@ import { formatEuro } from '../utils/calculations';
 
 export default function ErgebnisPanel({ ergebnisse, betrachtungszeitraum, entlastungsfaktor }) {
   return (
-    <div className="w-full lg:w-1/3 sticky top-8">
+    <div className="w-1/3 sticky top-8"> {/* w-full lg:w-1/3 zu w-1/3 geändert */}
       <div className="ergebnis-panel">
         <h2 className="text-xl font-bold text-gray-800 mb-6 flex items-center">
           <span className="mr-2 text-green-600">📉</span>

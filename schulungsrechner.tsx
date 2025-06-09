@@ -60,7 +60,7 @@ export default function LernlinkKostenrechner() {
       <HeroSection />
       
       <div className="container mx-auto px-4 py-8">
-        <div className="flex flex-col lg:flex-row gap-8 max-w-7xl mx-auto">
+        <div className="flex flex-row gap-8 max-w-7xl mx-auto"> {/* lg:flex-row zu flex-row geändert */}
           <ParameterPanel 
             mitarbeiter={mitarbeiter}
             setMitarbeiter={setMitarbeiter}
