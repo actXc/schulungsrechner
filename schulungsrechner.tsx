@@ -29,6 +29,7 @@ export default function LernlinkKostenrechner() {
   const [lmsAnschaffung, setLmsAnschaffung] = useState(3800);
   const [lmsHostingJahr, setLmsHostingJahr] = useState(1920);
   const [betrachtungszeitraum, setBetrachtungszeitraum] = useState(3);
+  const [raumkostenProTag, setRaumkostenProTag] = useState(150); // Neuer State, z.B. 150€ als Default
   const [ergebnisse, setErgebnisse] = useState({});
 
   useEffect(() => {
@@ -47,10 +48,11 @@ export default function LernlinkKostenrechner() {
       entlastungsfaktor,
       lmsAnschaffung,
       lmsHostingJahr,
-      betrachtungszeitraum
+      betrachtungszeitraum,
+      raumkostenProTag // Neuer Parameter für die Berechnung
     });
     setErgebnisse(results);
-  }, [mitarbeiter, unterweisungen, maxTeilnehmer, trainerTagessatz, anreiseAnteil, fahrtkosten, mitarbeiterStundensatz, entlastungsfaktor, lmsAnschaffung, lmsHostingJahr, betrachtungszeitraum]);
+  }, [mitarbeiter, unterweisungen, maxTeilnehmer, trainerTagessatz, anreiseAnteil, fahrtkosten, mitarbeiterStundensatz, entlastungsfaktor, lmsAnschaffung, lmsHostingJahr, betrachtungszeitraum, raumkostenProTag]);
   // unterweisungsDauer aus den Dependencies entfernt
 
   return (
@@ -87,6 +89,8 @@ export default function LernlinkKostenrechner() {
             setLmsHostingJahr={setLmsHostingJahr}
             betrachtungszeitraum={betrachtungszeitraum}
             setBetrachtungszeitraum={setBetrachtungszeitraum}
+            raumkostenProTag={raumkostenProTag} // Prop hinzufügen
+            setRaumkostenProTag={setRaumkostenProTag} // Prop hinzufügen
           />
           <ErgebnisPanel 
             ergebnisse={ergebnisse} 

@@ -4,7 +4,8 @@ const tooltips = {
   mitarbeiter: "Gesamtzahl aller Mitarbeitenden, die Pflichtschulungen absolvieren müssen.",
   maxTeilnehmer: "Maximale Anzahl Personen pro Präsenzschulung. Typisch: 15-25 Personen",
   trainerTagessatz: "Honorar eines externen Trainers pro Tag. Marktüblich: 800-1.500€",
-  entlastungsfaktor: "Zeitersparnis durch Online-Lernen. Studien zeigen 15-30% Ersparnis"
+  entlastungsfaktor: "Zeitersparnis durch Online-Lernen. Studien zeigen 15-30% Ersparnis",
+  raumkostenProTag: "Geschätzte tägliche Mietkosten für einen Schulungsraum, passend zur eingestellten Gruppengröße. Die Preisspanne des Sliders passt sich der Gruppengröße an."
 };
 
 export default function Tooltip({ id }) {

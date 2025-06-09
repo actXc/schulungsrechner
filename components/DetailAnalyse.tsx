@@ -14,7 +14,8 @@ export default function DetailAnalyse({
   fahrtkosten, 
   mitarbeiterStundensatz, 
   lmsAnschaffung, 
-  lmsHostingJahr 
+  lmsHostingJahr
+  // raumkostenProTag wird nicht direkt benötigt, da ergebnisse.gesamteRaumkosten verwendet wird
 }) {
   return (
     <div className="detail-analyse">
@@ -38,6 +39,10 @@ export default function DetailAnalyse({
             <div
               className="bg-blue-500 w-full"
               style={{ height: `${((ergebnisse.fahrkostenGesamt || 0) / (ergebnisse.traditionellJahr || 1)) * 200}px` }}
+            ></div>
+            <div 
+              className="bg-blue-400 w-full" 
+              style={{ height: `${((ergebnisse.gesamteRaumkosten || 0) / (ergebnisse.traditionellJahr || 1)) * 200}px` }}
             ></div>
             <div
               className="bg-blue-300 w-full"
@@ -107,6 +112,13 @@ export default function DetailAnalyse({
                 <span>Fahrtkosten:</span>
               </div>
               <span className="font-medium">{formatEuro(ergebnisse.fahrkostenGesamt || 0)}</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 bg-blue-400 rounded"></div>
+                <span>Raumkosten:</span>
+              </div>
+              <span className="font-medium">{formatEuro(ergebnisse.gesamteRaumkosten || 0)}</span>
             </div>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
@@ -208,6 +220,7 @@ export default function DetailAnalyse({
           <div><strong>Gesamtschulungsdauer/Jahr:</strong> {unterweisungen.reduce((sum, u) => sum + u.dauer, 0)}h</div>
           <div><strong>Anreiseanteil:</strong> {anreiseAnteil}%</div>
           <div><strong>Fahrtkosten:</strong> {formatEuro(fahrtkosten)}</div>
+          <div><strong>Raumkosten/Tag:</strong> {formatEuro(ergebnisse.raumkostenProTagParameter || 0)}</div>
           <div><strong>MA-Stundensatz:</strong> {formatEuro(mitarbeiterStundensatz)}</div>
           <div><strong>Zeitersparnis Online:</strong> {entlastungsfaktor}%</div>
           <div><strong>LMS-Anschaffung:</strong> {formatEuro(lmsAnschaffung)}</div>

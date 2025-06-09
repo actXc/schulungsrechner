@@ -11,7 +11,8 @@ export const berechneKosten = (params) => {
     entlastungsfaktor,
     lmsAnschaffung,
     lmsHostingJahr,
-    betrachtungszeitraum
+    betrachtungszeitraum,
+    raumkostenProTag // Neuer Parameter
   } = params;
 
   const themen = unterweisungen.length;
@@ -19,11 +20,17 @@ export const berechneKosten = (params) => {
   const gesamteDurchgaenge = themen * durchgaengeProThema;
   
   // Traditionelle Kosten
-  const trainerKosten = gesamteDurchgaenge * trainerTagessatz;
-  const fahrkostenGesamt = gesamteDurchgaenge * (maxTeilnehmer * anreiseAnteil / 100) * fahrtkosten;
-  // themen ist hier nicht mehr nötig, da gesamteUnterweisungsDauer die Summe aller Dauern ist
+  const trainerKosten = gesamteDurchgaenge * trainerTagessatz; // Annahme: gesamteDurchgaenge ist Anzahl Trainer-Tage
+  const fahrkostenGesamt = gesamteDurchgaenge * (maxTeilnehmer * anreiseAnteil / 100) * fahrtkosten; // Annahme: Fahrtkosten pro Trainer-Einsatz/Tag
+
+  const durchgaengeProThemaFuerRaum = Math.ceil(mitarbeiter / maxTeilnehmer);
+  // Berechne die Anzahl der benötigten Raumtage basierend auf der Dauer jeder einzelnen Unterweisung (max 4h pro Tag)
+  const sumOfRoomDaysNeededPerEmployee = unterweisungen.reduce((acc, u) => acc + Math.ceil(u.dauer / 4), 0);
+  const gesamteRaumTage = durchgaengeProThemaFuerRaum * sumOfRoomDaysNeededPerEmployee;
+  const gesamteRaumkosten = gesamteRaumTage * raumkostenProTag;
+  
   const ausfallzeitenTraditionell = mitarbeiter * gesamteUnterweisungsDauer * mitarbeiterStundensatz;
-  const traditionellJahr = trainerKosten + fahrkostenGesamt + ausfallzeitenTraditionell;
+  const traditionellJahr = trainerKosten + fahrkostenGesamt + ausfallzeitenTraditionell + gesamteRaumkosten;
 
   // LMS Kosten
   const lmsHosting = lmsHostingJahr;
@@ -65,13 +72,15 @@ export const berechneKosten = (params) => {
     lmsHosting,
     lmsZusatz,
     contentKostenGesamt,
-    gesamteDurchgaenge,
+    gesamteDurchgaenge, // Bezieht sich auf Trainer-Einsätze/Abrechnungseinheiten
+    gesamteRaumkosten, // Neu für die Detailanalyse
     stundenTraditionell,
     stundenLMS,
     betrachtungszeitraum,
     lmsAnschaffung,
     kostenProTeilnehmerTraditionellJahr,
-    kostenProTeilnehmerLMSJahr
+    kostenProTeilnehmerLMSJahr,
+    raumkostenProTagParameter: raumkostenProTag // Damit es im Summary angezeigt werden kann
   };
 };
 

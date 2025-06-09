@@ -32,8 +32,39 @@ export default function ParameterPanel({
   lmsHostingJahr,
   setLmsHostingJahr,
   betrachtungszeitraum,
-  setBetrachtungszeitraum
+  setBetrachtungszeitraum,
+  raumkostenProTag,
+  setRaumkostenProTag
 }) {
+
+  const calculateRaumkostenRange = (currentMaxTeilnehmer) => {
+    const minTN = 5, maxTN = 1000;
+    const minRK_at_minTN = 0, maxRK_at_minTN = 100;
+    const minRK_at_maxTN = 2000, maxRK_at_maxTN = 6000;
+
+    if (currentMaxTeilnehmer <= minTN) return { min: minRK_at_minTN, max: maxRK_at_minTN };
+    if (currentMaxTeilnehmer >= maxTN) return { min: minRK_at_maxTN, max: maxRK_at_maxTN };
+
+    const t = (currentMaxTeilnehmer - minTN) / (maxTN - minTN);
+    
+    const calcMin = Math.round((minRK_at_minTN * (1 - t) + minRK_at_maxTN * t) / 10) * 10;
+    const calcMax = Math.round((maxRK_at_minTN * (1 - t) + maxRK_at_maxTN * t) / 10) * 10;
+    
+    return { min: Math.max(0, calcMin), max: Math.max(calcMin + 10, calcMax) }; // Ensure max > min
+  };
+
+  const [currentRaumkostenRange, setCurrentRaumkostenRange] = React.useState(calculateRaumkostenRange(maxTeilnehmer));
+
+  React.useEffect(() => {
+    const newRange = calculateRaumkostenRange(maxTeilnehmer);
+    setCurrentRaumkostenRange(newRange);
+    if (raumkostenProTag < newRange.min) {
+      setRaumkostenProTag(newRange.min);
+    } else if (raumkostenProTag > newRange.max) {
+      setRaumkostenProTag(newRange.max);
+    }
+  }, [maxTeilnehmer, raumkostenProTag, setRaumkostenProTag]);
+
   const addUnterweisung = () => {
     setUnterweisungen([...unterweisungen, { name: 'Neue Unterweisung', kosten: 5, dauer: 0.5 }]); // Standarddauer für neue Unterweisung
   };
@@ -258,6 +289,25 @@ export default function ParameterPanel({
                 <div className="flex justify-between text-xs text-gray-500 mt-1 px-1">
                   <span>{formatEuro(0)}</span>
                   <span>{formatEuro(12000)}</span>
+                </div>
+              </div>
+              <div>
+                <label className="text-sm font-medium text-gray-700 mb-2 block">
+                  Raumkosten pro Tag: {formatEuro(raumkostenProTag)}
+                  <Tooltip id="raumkostenProTag" />
+                </label>
+                <input
+                  type="range"
+                  min={currentRaumkostenRange.min}
+                  max={currentRaumkostenRange.max}
+                  step="10" 
+                  value={raumkostenProTag}
+                  onChange={(e) => setRaumkostenProTag(parseInt(e.target.value))}
+                  className="slider-blue"
+                />
+                <div className="flex justify-between text-xs text-gray-500 mt-1 px-1">
+                  <span>{formatEuro(currentRaumkostenRange.min)}</span>
+                  <span>{formatEuro(currentRaumkostenRange.max)}</span>
                 </div>
               </div>
             </div>
