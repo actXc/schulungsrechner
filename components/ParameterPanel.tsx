@@ -104,6 +104,10 @@ export default function ParameterPanel({
                   onChange={(e) => setBetrachtungszeitraum(parseInt(e.target.value))}
                   className="slider-blue"
                 />
+                <div className="flex justify-between text-xs text-gray-500 mt-1 px-1">
+                  <span>1 J.</span>
+                  <span>5 J.</span>
+                </div>
               </div>
               <div>
                 <label className="flex items-center text-sm font-medium text-gray-700 mb-2">
@@ -141,6 +145,10 @@ export default function ParameterPanel({
                   onChange={(e) => setTrainerTagessatz(parseInt(e.target.value))}
                   className="slider-blue"
                 />
+                <div className="flex justify-between text-xs text-gray-500 mt-1 px-1">
+                  <span>{formatEuro(600)}</span>
+                  <span>{formatEuro(1800)}</span>
+                </div>
               </div>
               {/* Globaler Schulungsdauer-Slider wird entfernt */}
               <div>
@@ -156,6 +164,10 @@ export default function ParameterPanel({
                   onChange={(e) => setAnreiseAnteil(parseInt(e.target.value))}
                   className="slider-blue"
                 />
+                <div className="flex justify-between text-xs text-gray-500 mt-1 px-1">
+                  <span>0%</span>
+                  <span>100%</span>
+                </div>
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-700 mb-2 block">
@@ -170,6 +182,10 @@ export default function ParameterPanel({
                   onChange={(e) => setFahrtkosten(parseInt(e.target.value))}
                   className="slider-blue"
                 />
+                <div className="flex justify-between text-xs text-gray-500 mt-1 px-1">
+                  <span>{formatEuro(50)}</span>
+                  <span>{formatEuro(250)}</span>
+                </div>
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-700 mb-2 block">
@@ -184,6 +200,10 @@ export default function ParameterPanel({
                   onChange={(e) => setMitarbeiterStundensatz(parseInt(e.target.value))}
                   className="slider-blue"
                 />
+                <div className="flex justify-between text-xs text-gray-500 mt-1 px-1">
+                  <span>{formatEuro(40)}</span>
+                  <span>{formatEuro(100)}</span>
+                </div>
               </div>
               <div>
                 <label className="flex items-center text-sm font-medium text-gray-700 mb-2">
@@ -199,6 +219,10 @@ export default function ParameterPanel({
                   onChange={(e) => setEntlastungsfaktor(parseInt(e.target.value))}
                   className="slider-orange"
                 />
+                <div className="flex justify-between text-xs text-gray-500 mt-1 px-1">
+                  <span>0%</span>
+                  <span>50%</span>
+                </div>
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-700 mb-2 block">
@@ -213,6 +237,10 @@ export default function ParameterPanel({
                   onChange={(e) => setLmsAnschaffung(parseInt(e.target.value))}
                   className="slider-orange"
                 />
+                <div className="flex justify-between text-xs text-gray-500 mt-1 px-1">
+                  <span>{formatEuro(0)}</span>
+                  <span>{formatEuro(12000)}</span>
+                </div>
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-700 mb-2 block">
@@ -227,6 +255,10 @@ export default function ParameterPanel({
                   onChange={(e) => setLmsHostingJahr(parseInt(e.target.value))}
                   className="slider-orange"
                 />
+                <div className="flex justify-between text-xs text-gray-500 mt-1 px-1">
+                  <span>{formatEuro(0)}</span>
+                  <span>{formatEuro(12000)}</span>
+                </div>
               </div>
             </div>
           )}
