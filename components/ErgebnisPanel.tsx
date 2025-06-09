@@ -3,8 +3,8 @@ import { formatEuro } from '../utils/calculations';
 
 export default function ErgebnisPanel({ ergebnisse, betrachtungszeitraum, entlastungsfaktor }) {
   return (
-    <div className="w-1/3 sticky top-8"> {/* w-full lg:w-1/3 zu w-1/3 geändert */}
-      <div className="ergebnis-panel">
+    <div className="w-1/3 sticky top-8 max-h-[calc(100vh-2rem)]"> {/* max-h für Viewport-Höhe abzüglich top-Abstand */}
+      <div className="ergebnis-panel overflow-y-auto h-full"> {/* overflow-y-auto und h-full für internes Scrollen */}
         <h2 className="text-xl font-bold text-gray-800 mb-6 flex items-center">
           <span className="mr-2 text-green-600">📉</span>
           Live-Ergebnis
