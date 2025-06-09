@@ -102,7 +102,7 @@ export default function DetailAnalyse({
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <div className="w-4 h-4 bg-blue-700 rounded"></div>
-                <span>Trainer-Kosten:</span>
+                <span>Trainer-Kosten ({ergebnisse.gesamteDurchgaenge || 0} Einsätze):</span>
               </div>
               <span className="font-medium">{formatEuro(ergebnisse.trainerKosten || 0)}</span>
             </div>
