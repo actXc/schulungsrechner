@@ -224,7 +224,7 @@ export default function ParameterPanel({
                 </label>
                 <input
                   type="range"
-                  min="1200"
+                  min="0"
                   max="12000"
                   step="160"
                   value={lmsHostingJahr}
