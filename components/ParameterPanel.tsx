@@ -210,8 +210,8 @@ export default function ParameterPanel({
                 </label>
                 <input
                   type="range"
-                  min="2000"
-                  max="6000"
+                  min="0"
+                  max="12000"
                   step="200"
                   value={lmsAnschaffung}
                   onChange={(e) => setLmsAnschaffung(parseInt(e.target.value))}
