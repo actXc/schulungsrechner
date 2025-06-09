@@ -17,8 +17,7 @@ export default function ParameterPanel({
   setMaxTeilnehmer,
   trainerTagessatz,
   setTrainerTagessatz,
-  unterweisungsDauer,
-  setUnterweisungsDauer,
+  // unterweisungsDauer und setUnterweisungsDauer Props werden entfernt
   anreiseAnteil,
   setAnreiseAnteil,
   fahrtkosten,
@@ -35,7 +34,7 @@ export default function ParameterPanel({
   setBetrachtungszeitraum
 }) {
   const addUnterweisung = () => {
-    setUnterweisungen([...unterweisungen, { name: 'Neue Unterweisung', kosten: 5 }]);
+    setUnterweisungen([...unterweisungen, { name: 'Neue Unterweisung', kosten: 5, dauer: 0.5 }]); // Standarddauer für neue Unterweisung
   };
 
   const removeUnterweisung = (index) => {
@@ -135,27 +134,7 @@ export default function ParameterPanel({
                   className="slider-blue"
                 />
               </div>
-              <div>
-                <label className="text-sm font-medium text-gray-700 mb-2 block">
-                  Schulungsdauer: {unterweisungsDauer}h
-                </label>
-                <input
-                  type="range"
-                  min="0"
-                  max={allowedDauerValues.length - 1}
-                  step="1"
-                  value={allowedDauerValues.indexOf(unterweisungsDauer)}
-                  onChange={(e) => setUnterweisungsDauer(allowedDauerValues[parseInt(e.target.value)])}
-                  className="slider-blue"
-                />
-                <div className="flex justify-between text-xs text-gray-500 mt-1 px-1">
-                  {allowedDauerValues.map(val => (
-                    <span key={val} className={val === unterweisungsDauer ? 'font-bold text-blue-600' : ''}>
-                      {val}
-                    </span>
-                  ))}
-                </div>
-              </div>
+              {/* Globaler Schulungsdauer-Slider wird entfernt */}
               <div>
                 <label className="text-sm font-medium text-gray-700 mb-2 block">
                   Anreiseanteil: {anreiseAnteil}%
@@ -263,10 +242,25 @@ export default function ParameterPanel({
                     type="text"
                     value={unterweisung.name}
                     onChange={(e) => updateUnterweisung(index, 'name', e.target.value)}
-                    className="flex-1 p-2 border border-gray-300 rounded text-sm"
+                    className="flex-grow p-2 border border-gray-300 rounded text-sm"
                   />
                   <div className="flex items-center gap-1">
+                    <label htmlFor={`dauer-${index}`} className="text-sm text-gray-600 sr-only">Dauer</label>
+                    <select
+                      id={`dauer-${index}`}
+                      value={unterweisung.dauer}
+                      onChange={(e) => updateUnterweisung(index, 'dauer', parseFloat(e.target.value))}
+                      className="w-24 p-2 border border-gray-300 rounded text-sm"
+                    >
+                      {allowedDauerValues.map(val => (
+                        <option key={val} value={val}>{val}h</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <label htmlFor={`kosten-${index}`} className="text-sm text-gray-600 sr-only">Kosten</label>
                     <input
+                      id={`kosten-${index}`}
                       type="number"
                       value={unterweisung.kosten}
                       onChange={(e) => updateUnterweisung(index, 'kosten', parseInt(e.target.value) || 0)}

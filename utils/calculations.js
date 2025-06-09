@@ -4,7 +4,7 @@ export const berechneKosten = (params) => {
     unterweisungen,
     maxTeilnehmer,
     trainerTagessatz,
-    unterweisungsDauer,
+    gesamteUnterweisungsDauer, // Geänderter Parametername
     anreiseAnteil,
     fahrtkosten,
     mitarbeiterStundensatz,
@@ -21,14 +21,16 @@ export const berechneKosten = (params) => {
   // Traditionelle Kosten
   const trainerKosten = gesamteDurchgaenge * trainerTagessatz;
   const fahrkostenGesamt = gesamteDurchgaenge * (maxTeilnehmer * anreiseAnteil / 100) * fahrtkosten;
-  const ausfallzeitenTraditionell = mitarbeiter * themen * unterweisungsDauer * mitarbeiterStundensatz;
+  // themen ist hier nicht mehr nötig, da gesamteUnterweisungsDauer die Summe aller Dauern ist
+  const ausfallzeitenTraditionell = mitarbeiter * gesamteUnterweisungsDauer * mitarbeiterStundensatz;
   const traditionellJahr = trainerKosten + fahrkostenGesamt + ausfallzeitenTraditionell;
 
   // LMS Kosten
   const lmsHosting = lmsHostingJahr;
   const lmsZusatz = mitarbeiter > 300 ? (mitarbeiter - 300) * 2.2 : 0;
   const contentKostenGesamt = unterweisungen.reduce((sum, u) => sum + (mitarbeiter * u.kosten), 0);
-  const ausfallzeitenLMS = mitarbeiter * themen * unterweisungsDauer * mitarbeiterStundensatz * (100 - entlastungsfaktor) / 100;
+  // themen ist hier nicht mehr nötig
+  const ausfallzeitenLMS = mitarbeiter * gesamteUnterweisungsDauer * mitarbeiterStundensatz * (100 - entlastungsfaktor) / 100;
   const lmsJahreslaufend = lmsHosting + lmsZusatz + contentKostenGesamt + ausfallzeitenLMS;
 
   // Mehrjahresberechnung
@@ -42,8 +44,9 @@ export const berechneKosten = (params) => {
     roiMonate = Math.ceil((lmsAnschaffung / ersparnisJahr) * 12);
   }
 
-  const stundenTraditionell = mitarbeiter * themen * unterweisungsDauer;
-  const stundenLMS = mitarbeiter * themen * unterweisungsDauer * (100 - entlastungsfaktor) / 100;
+  // themen ist hier nicht mehr nötig
+  const stundenTraditionell = mitarbeiter * gesamteUnterweisungsDauer;
+  const stundenLMS = mitarbeiter * gesamteUnterweisungsDauer * (100 - entlastungsfaktor) / 100;
 
   const kostenProTeilnehmerTraditionellJahr = mitarbeiter > 0 ? traditionellJahr / mitarbeiter : 0;
   const lmsAnschaffungProJahr = betrachtungszeitraum > 0 ? lmsAnschaffung / betrachtungszeitraum : lmsAnschaffung;

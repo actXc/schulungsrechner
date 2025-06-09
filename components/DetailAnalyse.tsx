@@ -205,7 +205,7 @@ export default function DetailAnalyse({
           <div><strong>Unterweisungen:</strong> {unterweisungen.length} Themen</div>
           <div><strong>Gruppengröße Präsenz:</strong> {maxTeilnehmer} Personen</div>
           <div><strong>Trainer-Tagessatz:</strong> {formatEuro(trainerTagessatz)}</div>
-          <div><strong>Schulungsdauer:</strong> {unterweisungsDauer}h</div>
+          <div><strong>Gesamtschulungsdauer/Jahr:</strong> {unterweisungen.reduce((sum, u) => sum + u.dauer, 0)}h</div>
           <div><strong>Anreiseanteil:</strong> {anreiseAnteil}%</div>
           <div><strong>Fahrtkosten:</strong> {formatEuro(fahrtkosten)}</div>
           <div><strong>MA-Stundensatz:</strong> {formatEuro(mitarbeiterStundensatz)}</div>

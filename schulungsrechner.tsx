@@ -10,18 +10,18 @@ import './styles/main.css';
 export default function LernlinkKostenrechner() {
   const [mitarbeiter, setMitarbeiter] = useState(100);
   const [unterweisungen, setUnterweisungen] = useState([
-    { name: 'Gleichstellungsgesetz', kosten: 5 },
-    { name: 'Arbeitssicherheit', kosten: 5 },
-    { name: 'Datenschutz', kosten: 5 },
-    { name: 'IT-Security', kosten: 5 },
-    { name: 'Brandschutz', kosten: 5 }
+    { name: 'Gleichstellungsgesetz', kosten: 5, dauer: 0.5 },
+    { name: 'Arbeitssicherheit', kosten: 5, dauer: 0.5 },
+    { name: 'Datenschutz', kosten: 5, dauer: 0.5 },
+    { name: 'IT-Security', kosten: 5, dauer: 0.5 },
+    { name: 'Brandschutz', kosten: 5, dauer: 0.5 }
   ]);
   
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [showUnterweisungen, setShowUnterweisungen] = useState(false);
   const [maxTeilnehmer, setMaxTeilnehmer] = useState(25);
   const [trainerTagessatz, setTrainerTagessatz] = useState(1200);
-  const [unterweisungsDauer, setUnterweisungsDauer] = useState(0.5);
+  // unterweisungsDauer state wird entfernt
   const [anreiseAnteil, setAnreiseAnteil] = useState(5);
   const [fahrtkosten, setFahrtkosten] = useState(120);
   const [mitarbeiterStundensatz, setMitarbeiterStundensatz] = useState(60);
@@ -32,12 +32,15 @@ export default function LernlinkKostenrechner() {
   const [ergebnisse, setErgebnisse] = useState({});
 
   useEffect(() => {
+    // Berechne die gesamte Unterweisungsdauer aus den einzelnen Unterweisungen
+    const gesamteUnterweisungsDauer = unterweisungen.reduce((sum, u) => sum + u.dauer, 0);
+
     const results = berechneKosten({
       mitarbeiter,
-      unterweisungen,
+      unterweisungen, // unterweisungen enthält jetzt die einzelnen Dauern
       maxTeilnehmer,
       trainerTagessatz,
-      unterweisungsDauer,
+      gesamteUnterweisungsDauer, // Übergabe der summierten Dauer
       anreiseAnteil,
       fahrtkosten,
       mitarbeiterStundensatz,
@@ -47,7 +50,8 @@ export default function LernlinkKostenrechner() {
       betrachtungszeitraum
     });
     setErgebnisse(results);
-  }, [mitarbeiter, unterweisungen, maxTeilnehmer, trainerTagessatz, unterweisungsDauer, anreiseAnteil, fahrtkosten, mitarbeiterStundensatz, entlastungsfaktor, lmsAnschaffung, lmsHostingJahr, betrachtungszeitraum]);
+  }, [mitarbeiter, unterweisungen, maxTeilnehmer, trainerTagessatz, anreiseAnteil, fahrtkosten, mitarbeiterStundensatz, entlastungsfaktor, lmsAnschaffung, lmsHostingJahr, betrachtungszeitraum]);
+  // unterweisungsDauer aus den Dependencies entfernt
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
@@ -68,8 +72,7 @@ export default function LernlinkKostenrechner() {
             setMaxTeilnehmer={setMaxTeilnehmer}
             trainerTagessatz={trainerTagessatz}
             setTrainerTagessatz={setTrainerTagessatz}
-            unterweisungsDauer={unterweisungsDauer}
-            setUnterweisungsDauer={setUnterweisungsDauer}
+            // unterweisungsDauer und setUnterweisungsDauer Props werden entfernt
             anreiseAnteil={anreiseAnteil}
             setAnreiseAnteil={setAnreiseAnteil}
             fahrtkosten={fahrtkosten}
@@ -97,10 +100,10 @@ export default function LernlinkKostenrechner() {
           betrachtungszeitraum={betrachtungszeitraum}
           entlastungsfaktor={entlastungsfaktor}
           mitarbeiter={mitarbeiter}
-          unterweisungen={unterweisungen}
+          unterweisungen={unterweisungen} // unterweisungen enthält jetzt die einzelnen Dauern
           maxTeilnehmer={maxTeilnehmer}
           trainerTagessatz={trainerTagessatz}
-          unterweisungsDauer={unterweisungsDauer}
+          // unterweisungsDauer Prop wird entfernt, stattdessen wird die Summe indirekt über ergebnisse.stunden... genutzt
           anreiseAnteil={anreiseAnteil}
           fahrtkosten={fahrtkosten}
           mitarbeiterStundensatz={mitarbeiterStundensatz}
