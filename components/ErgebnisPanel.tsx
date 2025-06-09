@@ -18,9 +18,6 @@ export default function ErgebnisPanel({ ergebnisse, betrachtungszeitraum, entlas
           <div className="text-2xl font-bold text-green-600 mb-1">
             {formatEuro(ergebnisse.ersparnis || 0)}
           </div>
-          <div className="text-sm text-gray-700">
-            {formatEuro(ergebnisse.ersparnisJahr || 0)} pro Jahr ab Jahr 2
-          </div>
           {ergebnisse.roiMonate > 0 && ergebnisse.roiMonate <= 36 && (
             <div className="mt-2 text-xs text-blue-600 font-semibold">
               💡 ROI nach {ergebnisse.roiMonate} Monaten!
