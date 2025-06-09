@@ -57,8 +57,8 @@ export default function ErgebnisPanel({ ergebnisse, betrachtungszeitraum, entlas
                   {formatEuro(ergebnisse.ersparnisJahr || 0)}
                 </span>
                 {ergebnisse.traditionellJahr > 0 && (
-                  <span className="block font-bold text-green-600">
-                    ({Math.round(((ergebnisse.ersparnisJahr || 0) / ergebnisse.traditionellJahr) * 100)}%)
+                  <span className="block font-bold text-green-600 text-lg">
+                    {Math.round(((ergebnisse.ersparnisJahr || 0) / ergebnisse.traditionellJahr) * 100)}%
                   </span>
                 )}
               </div>
