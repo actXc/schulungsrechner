@@ -137,15 +137,19 @@ export default function ParameterPanel({
                 <label className="text-sm font-medium text-gray-700 mb-2 block">
                   Schulungsdauer: {unterweisungsDauer}h
                 </label>
-                <input
-                  type="range"
-                  min="1"
-                  max="4"
-                  step="0.5"
+                <select
                   value={unterweisungsDauer}
                   onChange={(e) => setUnterweisungsDauer(parseFloat(e.target.value))}
-                  className="slider-blue"
-                />
+                  className="w-full p-2 border border-gray-300 rounded text-sm slider-blue"
+                >
+                  <option value="0">0 Stunden</option>
+                  <option value="0.5">0,5 Stunden</option>
+                  <option value="1">1 Stunde</option>
+                  <option value="2">2 Stunden</option>
+                  <option value="4">4 Stunden</option>
+                  <option value="6">6 Stunden</option>
+                  <option value="8">8 Stunden</option>
+                </select>
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-700 mb-2 block">
