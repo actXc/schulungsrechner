@@ -92,6 +92,14 @@ export default function ErgebnisPanel({ ergebnisse, betrachtungszeitraum, entlas
             <span className="text-sm text-gray-600">Trainings gesamt:</span>
             <span className="font-medium">{ergebnisse.gesamteDurchgaenge || 0}</span>
           </div>
+          <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
+            <span className="text-sm text-gray-600">Kosten/MA/Jahr (Traditionell):</span>
+            <span className="font-bold text-blue-600">{formatEuro(ergebnisse.kostenProTeilnehmerTraditionellJahr || 0)}</span>
+          </div>
+          <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
+            <span className="text-sm text-gray-600">Kosten/MA/Jahr (LMS):</span>
+            <span className="font-bold text-orange-600">{formatEuro(ergebnisse.kostenProTeilnehmerLMSJahr || 0)}</span>
+          </div>
         </div>
 
         {/* CTAs */}
