@@ -12,7 +12,8 @@ export const berechneKosten = (params) => {
     lmsAnschaffung,
     lmsHostingJahr,
     betrachtungszeitraum,
-    raumkostenProTag // Neuer Parameter
+    raumkostenProTag, // Neuer Parameter
+    beruecksichtigeAusfallzeiten // Neuer Parameter
   } = params;
 
   const themen = unterweisungen.length;
@@ -32,15 +33,24 @@ export const berechneKosten = (params) => {
   const gesamteRaumTage = raumTageProGruppe * anzahlGruppen; // Gesamte Raumtage über alle Gruppen
   const gesamteRaumkosten = gesamteRaumTage * raumkostenProTag;
   
-  const ausfallzeitenTraditionell = mitarbeiter * gesamteUnterweisungsDauer * mitarbeiterStundensatz;
+  let ausfallzeitenTraditionell = 0;
+  let ausfallzeitenLMS = 0;
+  let aktuelleStundenTraditionell = 0;
+  let aktuelleStundenLMS = 0;
+
+  if (beruecksichtigeAusfallzeiten) {
+    ausfallzeitenTraditionell = mitarbeiter * gesamteUnterweisungsDauer * mitarbeiterStundensatz;
+    ausfallzeitenLMS = mitarbeiter * gesamteUnterweisungsDauer * mitarbeiterStundensatz * (100 - entlastungsfaktor) / 100;
+    aktuelleStundenTraditionell = mitarbeiter * gesamteUnterweisungsDauer;
+    aktuelleStundenLMS = mitarbeiter * gesamteUnterweisungsDauer * (100 - entlastungsfaktor) / 100;
+  }
+  
   const traditionellJahr = trainerKosten + fahrkostenGesamt + ausfallzeitenTraditionell + gesamteRaumkosten;
 
   // LMS Kosten
   const lmsHosting = lmsHostingJahr;
   const lmsZusatz = mitarbeiter > 300 ? (mitarbeiter - 300) * 2.2 : 0;
   const contentKostenGesamt = unterweisungen.reduce((sum, u) => sum + (mitarbeiter * u.kosten), 0);
-  // themen ist hier nicht mehr nötig
-  const ausfallzeitenLMS = mitarbeiter * gesamteUnterweisungsDauer * mitarbeiterStundensatz * (100 - entlastungsfaktor) / 100;
   const lmsJahreslaufend = lmsHosting + lmsZusatz + contentKostenGesamt + ausfallzeitenLMS;
 
   // Mehrjahresberechnung
@@ -71,14 +81,14 @@ export const berechneKosten = (params) => {
     trainerKosten,
     fahrkostenGesamt,
     ausfallzeitenTraditionell,
-    ausfallzeitenLMS,
+    ausfallzeitenLMS, // Bleibt für die Anzeige, wird aber 0 sein, wenn nicht berücksichtigt
     lmsHosting,
     lmsZusatz,
     contentKostenGesamt,
     gesamteDurchgaenge, // Bezieht sich auf Trainer-Einsätze/Abrechnungseinheiten
     gesamteRaumkosten, // Neu für die Detailanalyse
-    stundenTraditionell,
-    stundenLMS,
+    stundenTraditionell: aktuelleStundenTraditionell, // Angepasste Stunden
+    stundenLMS: aktuelleStundenLMS, // Angepasste Stunden
     betrachtungszeitraum,
     lmsAnschaffung,
     kostenProTeilnehmerTraditionellJahr,

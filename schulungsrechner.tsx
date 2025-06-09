@@ -30,6 +30,7 @@ export default function LernlinkKostenrechner() {
   const [lmsHostingJahr, setLmsHostingJahr] = useState(1920);
   const [betrachtungszeitraum, setBetrachtungszeitraum] = useState(3);
   const [raumkostenProTag, setRaumkostenProTag] = useState(150); // Neuer State, z.B. 150€ als Default
+  const [beruecksichtigeAusfallzeiten, setBeruecksichtigeAusfallzeiten] = useState(true); // Neuer State
   const [ergebnisse, setErgebnisse] = useState({});
 
   useEffect(() => {
@@ -49,10 +50,11 @@ export default function LernlinkKostenrechner() {
       lmsAnschaffung,
       lmsHostingJahr,
       betrachtungszeitraum,
-      raumkostenProTag // Neuer Parameter für die Berechnung
+      raumkostenProTag, // Neuer Parameter für die Berechnung
+      beruecksichtigeAusfallzeiten // Neuer Parameter für die Berechnung
     });
     setErgebnisse(results);
-  }, [mitarbeiter, unterweisungen, maxTeilnehmer, trainerTagessatz, anreiseAnteil, fahrtkosten, mitarbeiterStundensatz, entlastungsfaktor, lmsAnschaffung, lmsHostingJahr, betrachtungszeitraum, raumkostenProTag]);
+  }, [mitarbeiter, unterweisungen, maxTeilnehmer, trainerTagessatz, anreiseAnteil, fahrtkosten, mitarbeiterStundensatz, entlastungsfaktor, lmsAnschaffung, lmsHostingJahr, betrachtungszeitraum, raumkostenProTag, beruecksichtigeAusfallzeiten]);
   // unterweisungsDauer aus den Dependencies entfernt
 
   return (
@@ -91,6 +93,8 @@ export default function LernlinkKostenrechner() {
             setBetrachtungszeitraum={setBetrachtungszeitraum}
             raumkostenProTag={raumkostenProTag} // Prop hinzufügen
             setRaumkostenProTag={setRaumkostenProTag} // Prop hinzufügen
+            beruecksichtigeAusfallzeiten={beruecksichtigeAusfallzeiten} // Prop hinzufügen
+            setBeruecksichtigeAusfallzeiten={setBeruecksichtigeAusfallzeiten} // Prop hinzufügen
           />
           <ErgebnisPanel 
             ergebnisse={ergebnisse} 
@@ -113,6 +117,7 @@ export default function LernlinkKostenrechner() {
           mitarbeiterStundensatz={mitarbeiterStundensatz}
           lmsAnschaffung={lmsAnschaffung}
           lmsHostingJahr={lmsHostingJahr}
+          beruecksichtigeAusfallzeiten={beruecksichtigeAusfallzeiten} // Prop hinzufügen
         />
       </div>
       

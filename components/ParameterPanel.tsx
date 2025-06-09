@@ -35,7 +35,9 @@ export default function ParameterPanel({
   betrachtungszeitraum,
   setBetrachtungszeitraum,
   raumkostenProTag,
-  setRaumkostenProTag
+  setRaumkostenProTag,
+  beruecksichtigeAusfallzeiten,
+  setBeruecksichtigeAusfallzeiten
 }) {
 
   const calculateRaumkostenRange = (currentMaxTeilnehmer) => {
@@ -242,8 +244,14 @@ export default function ParameterPanel({
                 </div>
               </div>
               <div>
-                <label className="text-sm font-medium text-gray-700 mb-2 block">
-                  MA-Stundensatz: {formatEuro(mitarbeiterStundensatz)}
+                <label className="text-sm font-medium text-gray-700 mb-2 flex items-center">
+                  <input
+                    type="checkbox"
+                    checked={beruecksichtigeAusfallzeiten}
+                    onChange={(e) => setBeruecksichtigeAusfallzeiten(e.target.checked)}
+                    className="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  />
+                  MA-Stundensatz: {beruecksichtigeAusfallzeiten ? formatEuro(mitarbeiterStundensatz) : 'nicht berücksichtigt'}
                 </label>
                 <input
                   type="range"
@@ -252,9 +260,10 @@ export default function ParameterPanel({
                   step="5"
                   value={mitarbeiterStundensatz}
                   onChange={(e) => setMitarbeiterStundensatz(parseInt(e.target.value))}
-                  className="slider-blue"
+                  className={`slider-blue ${!beruecksichtigeAusfallzeiten ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  disabled={!beruecksichtigeAusfallzeiten}
                 />
-                <div className="flex justify-between text-xs text-gray-500 mt-1 px-1">
+                <div className={`flex justify-between text-xs text-gray-500 mt-1 px-1 ${!beruecksichtigeAusfallzeiten ? 'opacity-50' : ''}`}>
                   <span>{formatEuro(40)}</span>
                   <span>{formatEuro(100)}</span>
                 </div>

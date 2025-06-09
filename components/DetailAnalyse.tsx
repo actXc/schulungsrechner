@@ -14,8 +14,8 @@ export default function DetailAnalyse({
   fahrtkosten, 
   mitarbeiterStundensatz, 
   lmsAnschaffung, 
-  lmsHostingJahr
-  // raumkostenProTag wird nicht direkt benötigt, da ergebnisse.gesamteRaumkosten verwendet wird
+  lmsHostingJahr,
+  beruecksichtigeAusfallzeiten // Neue Prop
 }) {
   return (
     <div className="detail-analyse">
@@ -126,8 +126,14 @@ export default function DetailAnalyse({
                 <span>Ausfallzeiten:</span>
               </div>
               <div className="text-right">
-                <div className="text-xs text-gray-600">{ergebnisse.stundenTraditionell?.toFixed(0) || 0} Stunden</div>
-                <span className="font-medium">{formatEuro(ergebnisse.ausfallzeitenTraditionell || 0)}</span>
+                {beruecksichtigeAusfallzeiten ? (
+                  <>
+                    <div className="text-xs text-gray-600">{ergebnisse.stundenTraditionell?.toFixed(0) || 0} Stunden</div>
+                    <span className="font-medium">{formatEuro(ergebnisse.ausfallzeitenTraditionell || 0)}</span>
+                  </>
+                ) : (
+                  <span className="font-medium text-gray-500">Nicht berücksichtigt</span>
+                )}
               </div>
             </div>
             <div className="border-t border-blue-200 pt-2 mt-3">
@@ -179,8 +185,14 @@ export default function DetailAnalyse({
                 <span>Optimierte Ausfallzeiten:</span>
               </div>
               <div className="text-right">
-                <div className="text-xs text-gray-600">{ergebnisse.stundenLMS?.toFixed(0) || 0} Stunden (-{entlastungsfaktor}%)</div>
-                <span className="font-medium">{formatEuro(ergebnisse.ausfallzeitenLMS || 0)}</span>
+                {beruecksichtigeAusfallzeiten ? (
+                  <>
+                    <div className="text-xs text-gray-600">{ergebnisse.stundenLMS?.toFixed(0) || 0} Stunden (-{entlastungsfaktor}%)</div>
+                    <span className="font-medium">{formatEuro(ergebnisse.ausfallzeitenLMS || 0)}</span>
+                  </>
+                ) : (
+                  <span className="font-medium text-gray-500">Nicht berücksichtigt</span>
+                )}
               </div>
             </div>
             <div className="border-t border-orange-200 pt-2 mt-3">
@@ -221,7 +233,7 @@ export default function DetailAnalyse({
           <div><strong>Anreiseanteil:</strong> {anreiseAnteil}%</div>
           <div><strong>Fahrtkosten:</strong> {formatEuro(fahrtkosten)}</div>
           <div><strong>Raumkosten/Tag:</strong> {formatEuro(ergebnisse.raumkostenProTagParameter || 0)}</div>
-          <div><strong>MA-Stundensatz:</strong> {formatEuro(mitarbeiterStundensatz)}</div>
+          <div><strong>MA-Stundensatz:</strong> {beruecksichtigeAusfallzeiten ? formatEuro(mitarbeiterStundensatz) : 'Nicht berücksichtigt'}</div>
           <div><strong>Zeitersparnis Online:</strong> {entlastungsfaktor}%</div>
           <div><strong>LMS-Anschaffung:</strong> {formatEuro(lmsAnschaffung)}</div>
           <div><strong>LMS-Hosting/Jahr:</strong> {formatEuro(lmsHostingJahr)}</div>
