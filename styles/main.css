@@ -48,15 +48,10 @@
   margin-bottom: 1rem;
 }
 
-@media (min-width: 768px) {
+/* Parameter-Grid wird erst ab 1024px zweispaltig */
+@media (min-width: 1024px) {
   .parameter-grid {
     grid-template-columns: 1fr 1fr;
-  }
-}
-
-@media (min-width: 800px) {
-  .parameter-grid {
-    grid-template-columns: 1fr; /* Ab 800px Breite wieder einspaltig */
   }
 }
 
