@@ -64,10 +64,6 @@ export const berechneKosten = (params) => {
     roiMonate = Math.ceil((lmsAnschaffung / ersparnisJahr) * 12);
   }
 
-  // themen ist hier nicht mehr nötig
-  const stundenTraditionell = mitarbeiter * gesamteUnterweisungsDauer;
-  const stundenLMS = mitarbeiter * gesamteUnterweisungsDauer * (100 - entlastungsfaktor) / 100;
-
   const kostenProTeilnehmerTraditionellJahr = mitarbeiter > 0 ? traditionellJahr / mitarbeiter : 0;
   const lmsAnschaffungProJahr = betrachtungszeitraum > 0 ? lmsAnschaffung / betrachtungszeitraum : lmsAnschaffung;
   const kostenProTeilnehmerLMSJahr = mitarbeiter > 0 ? (lmsJahreslaufend + lmsAnschaffungProJahr) / mitarbeiter : 0;
