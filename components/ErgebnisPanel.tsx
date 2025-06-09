@@ -35,7 +35,7 @@ export default function ErgebnisPanel({ ergebnisse, betrachtungszeitraum, entlas
 
         {/* Kostenvergleich */}
         <div className="mb-6">
-          <h3 className="text-sm font-semibold mb-4 text-center">Kostenvergleich (jährlich)</h3>
+          <h3 className="text-sm font-semibold mb-4 text-center hide-bars-on-small-screens">Kostenvergleich (jährlich)</h3>
           
           <div className="flex justify-center items-end gap-3 mb-4">
             <div className="flex flex-col items-center hide-bars-on-small-screens">
@@ -79,7 +79,7 @@ export default function ErgebnisPanel({ ergebnisse, betrachtungszeitraum, entlas
         {/* Key Metrics */}
         <div className="space-y-3 mb-6">
           <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
-            <span className="text-sm text-gray-600">Kosten/MA/Jahr:</span>
+            <span className="text-sm text-gray-600">Kosten p. MA/Jahr:</span>
             <div>
               <span className="font-bold text-blue-600">{formatEuro(ergebnisse.kostenProTeilnehmerTraditionellJahr || 0)}</span>
               <span className="text-gray-500 mx-1">/</span>
