@@ -1,0 +1,28 @@
+# Node/React
+node_modules/
+.next/
+dist/
+build/
+*.log
+
+# Environment & Secrets (Sicherheit!)
+.env
+.env.local
+.env.*.local
+*.env
+
+# Aider Files
+.aider*
+.aider.chat.history.md
+.aider.input.history
+.aider.llm.history
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
