@@ -10,11 +10,11 @@ import './styles/main.css';
 export default function LernlinkKostenrechner() {
   const [mitarbeiter, setMitarbeiter] = useState(100);
   const [unterweisungen, setUnterweisungen] = useState([
-    { name: 'Gleichstellungsgesetz', kosten: 10 },
-    { name: 'Arbeitssicherheit', kosten: 10 },
-    { name: 'Datenschutz', kosten: 10 },
-    { name: 'IT-Security', kosten: 10 },
-    { name: 'Brandschutz', kosten: 10 }
+    { name: 'Gleichstellungsgesetz', kosten: 5 },
+    { name: 'Arbeitssicherheit', kosten: 5 },
+    { name: 'Datenschutz', kosten: 5 },
+    { name: 'IT-Security', kosten: 5 },
+    { name: 'Brandschutz', kosten: 5 }
   ]);
   
   const [showAdvanced, setShowAdvanced] = useState(false);
