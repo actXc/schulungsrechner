@@ -2,6 +2,8 @@ import React from 'react';
 import Tooltip from './Tooltip';
 import { formatEuro } from '../utils/calculations';
 
+const allowedDauerValues = [0, 0.5, 1, 2, 4, 6, 8];
+
 export default function ParameterPanel({
   mitarbeiter,
   setMitarbeiter,
@@ -137,19 +139,22 @@ export default function ParameterPanel({
                 <label className="text-sm font-medium text-gray-700 mb-2 block">
                   Schulungsdauer: {unterweisungsDauer}h
                 </label>
-                <select
-                  value={unterweisungsDauer}
-                  onChange={(e) => setUnterweisungsDauer(parseFloat(e.target.value))}
-                  className="w-full p-2 border border-gray-300 rounded text-sm slider-blue"
-                >
-                  <option value="0">0 Stunden</option>
-                  <option value="0.5">0,5 Stunden</option>
-                  <option value="1">1 Stunde</option>
-                  <option value="2">2 Stunden</option>
-                  <option value="4">4 Stunden</option>
-                  <option value="6">6 Stunden</option>
-                  <option value="8">8 Stunden</option>
-                </select>
+                <input
+                  type="range"
+                  min="0"
+                  max={allowedDauerValues.length - 1}
+                  step="1"
+                  value={allowedDauerValues.indexOf(unterweisungsDauer)}
+                  onChange={(e) => setUnterweisungsDauer(allowedDauerValues[parseInt(e.target.value)])}
+                  className="slider-blue"
+                />
+                <div className="flex justify-between text-xs text-gray-500 mt-1 px-1">
+                  {allowedDauerValues.map(val => (
+                    <span key={val} className={val === unterweisungsDauer ? 'font-bold text-blue-600' : ''}>
+                      {val}
+                    </span>
+                  ))}
+                </div>
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-700 mb-2 block">
