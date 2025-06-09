@@ -86,7 +86,7 @@ export default function ParameterPanel({
   };
 
   return (
-    <div className="w-2/3"> {/* w-full lg:w-2/3 zu w-2/3 geändert */}
+    <div className="grow-[2]"> {/* Nimmt flexibel Platz (doppelt so viel wie ErgebnisPanel) */}
       <div className="parameter-panel">
         <h2 className="text-xl font-bold text-gray-800 mb-6 flex items-center">
           <span className="mr-2 text-blue-600">👥</span>
