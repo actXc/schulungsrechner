@@ -197,3 +197,9 @@
     font-size: 1.5rem;
   }
 }
+
+@media (max-width: 529px) {
+  .hide-bars-on-small-screens {
+    display: none !important;
+  }
+}
