@@ -389,7 +389,7 @@ export default function ParameterPanel({
                         : 'bg-red-100 text-red-600 hover:bg-red-200'
                     }`}
                   >
-                    ✕ Thema entfernen
+                    🗑️
                   </button>
                 </div>
               ))}
