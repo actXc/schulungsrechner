@@ -22,7 +22,7 @@ export default function DetailAnalyse({
       <h3 className="text-2xl font-bold text-gray-800 mb-8 text-center">Detaillierte Kostenanalyse</h3>
       
       {/* Container für Balken */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+      <div className="grid grid-cols-2 gap-8 mb-8"> {/* lg:grid-cols-2 zu grid-cols-2 geändert */}
         {/* Traditioneller Balken */}
         <div className="flex flex-col items-center mb-6 lg:mb-0">
           <div className="text-sm font-semibold text-gray-700 mb-2 text-center">
@@ -94,7 +94,7 @@ export default function DetailAnalyse({
       </div>
 
       {/* Container für Legenden */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+      <div className="grid grid-cols-2 gap-8 mb-8"> {/* lg:grid-cols-2 zu grid-cols-2 geändert */}
         {/* Traditionelle Legende */}
         <div className="legende-box legende-traditionell">
           <h4 className="font-semibold text-blue-800 mb-3">Traditionelle Unterweisungen</h4>
