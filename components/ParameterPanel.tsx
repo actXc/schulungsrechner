@@ -105,9 +105,12 @@ export default function ParameterPanel({
             onChange={(e) => setMitarbeiter(mitarbeiterAnzahlSkala[parseInt(e.target.value)])}
             className="w-full h-3 bg-blue-200 rounded-lg appearance-none cursor-pointer"
           />
-          <div className="flex justify-between text-sm text-gray-500 mt-2">
-            <span>{mitarbeiterAnzahlSkala[0]}</span>
-            <span>{mitarbeiterAnzahlSkala[mitarbeiterAnzahlSkala.length - 1]}</span>
+          <div className="flex justify-between text-xs text-gray-500 mt-1 px-1">
+            {mitarbeiterAnzahlSkala.map(val => (
+              <span key={val} className={`text-center ${val === mitarbeiter ? 'font-bold text-blue-600' : ''}`}>
+                {val >= 1000 ? `${val/1000}k` : val}
+              </span>
+            ))}
           </div>
         </div>
 
