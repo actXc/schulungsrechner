@@ -35,7 +35,7 @@ export default function ParameterPanel({
   setBetrachtungszeitraum
 }) {
   const addUnterweisung = () => {
-    setUnterweisungen([...unterweisungen, { name: 'Neue Unterweisung', kosten: 29 }]);
+    setUnterweisungen([...unterweisungen, { name: 'Neue Unterweisung', kosten: 10 }]);
   };
 
   const removeUnterweisung = (index) => {
