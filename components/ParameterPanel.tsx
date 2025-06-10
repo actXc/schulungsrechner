@@ -369,12 +369,12 @@ export default function ParameterPanel({
 
               {/* Modus-spezifische Eingabefelder und Unterweisungsliste */}
               <div className="p-1">
-                {/* Unterweisungsliste wird jetzt hier gerendert, Inhalt variiert je nach Modus */}
-                <div className="space-y-3 mb-4">
-                  {unterweisungen.map((unterweisung, index) => (
-                    <div key={index} className="flex flex-col md:flex-row md:items-start gap-3 md:gap-2 p-3 bg-gray-50 rounded-lg">
-                      {/* Name und Dauer immer sichtbar */}
-                      <input
+                {contentKostenModus === 'kaufen' && (
+                  <div className="space-y-3">
+                    <p className="text-xs text-gray-600">Definieren Sie hier die Kosten pro Person für jede gekaufte Online-Unterweisung.</p>
+                    {unterweisungen.map((unterweisung, index) => (
+                      <div key={index} className="flex flex-col md:flex-row md:items-center gap-3 md:gap-2 p-3 bg-gray-50 rounded-lg">
+                        <input
                         type="text"
                         value={unterweisung.name}
                         onChange={(e) => updateUnterweisung(index, 'name', e.target.value)}
