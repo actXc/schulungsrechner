@@ -126,10 +126,10 @@ export const berechneKosten = (params) => {
   };
 };
 
-export const formatEuro = (betrag) => {
-  return new Intl.NumberFormat('de-DE', {
+export const formatEuro = (betrag, waehrung = 'EUR') => { // Standard auf EUR gesetzt
+  return new Intl.NumberFormat('de-DE', { // 'de-CH' für CHF wäre auch eine Option für Formatierung
     style: 'currency',
-    currency: 'EUR',
+    currency: waehrung, // Dynamische Währung
     minimumFractionDigits: 0,
     maximumFractionDigits: 0
   }).format(betrag);

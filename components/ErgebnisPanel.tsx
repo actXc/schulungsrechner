@@ -1,7 +1,7 @@
 import React from 'react';
 import { formatEuro } from '../utils/calculations';
 
-export default function ErgebnisPanel({ ergebnisse, betrachtungszeitraum, entlastungsfaktor }) {
+export default function ErgebnisPanel({ ergebnisse, betrachtungszeitraum, entlastungsfaktor, waehrung }) {
   return (
     <div className="grow sticky top-8 max-h-[calc(100vh-2rem)]"> {/* Nimmt flexibel Platz, max-h für Viewport-Höhe abzüglich top-Abstand */}
       <div className="ergebnis-panel overflow-y-auto h-full"> {/* overflow-y-auto und h-full für internes Scrollen */}
@@ -16,7 +16,7 @@ export default function ErgebnisPanel({ ergebnisse, betrachtungszeitraum, entlas
             Ersparnis über {betrachtungszeitraum} Jahre
           </div>
           <div className="text-2xl font-bold text-green-600 mb-1">
-            {formatEuro(ergebnisse.ersparnis || 0)}
+            {formatEuro(ergebnisse.ersparnis || 0, waehrung)}
           </div>
           {ergebnisse.roiMonate > 0 && ergebnisse.roiMonate <= 36 && (
             <div className="mt-2 text-xs text-blue-600 font-semibold">
@@ -43,7 +43,7 @@ export default function ErgebnisPanel({ ergebnisse, betrachtungszeitraum, entlas
               <div className="text-xs font-semibold text-gray-700 mb-1">Traditionell</div>
               <div className="w-12 bg-blue-400 rounded" style={{ height: '80px' }}></div>
               <div className="text-sm font-bold text-blue-800 mt-2">
-                {formatEuro(ergebnisse.traditionellJahr || 0)}
+                {formatEuro(ergebnisse.traditionellJahr || 0, waehrung)}
               </div>
             </div>
 
@@ -53,7 +53,7 @@ export default function ErgebnisPanel({ ergebnisse, betrachtungszeitraum, entlas
               <div className="text-xs text-gray-500">
                 <span className="text-xl">💰</span><br/> {/* Symbol für Ersparnis */}
                 <span className="font-bold text-green-600">
-                  {formatEuro(ergebnisse.ersparnisJahr || 0)}
+                  {formatEuro(ergebnisse.ersparnisJahr || 0, waehrung)}
                 </span>
                 {ergebnisse.traditionellJahr > 0 && (
                   <span className="block font-bold text-green-600 text-lg">
@@ -73,7 +73,7 @@ export default function ErgebnisPanel({ ergebnisse, betrachtungszeitraum, entlas
                 }}
               ></div>
               <div className="text-sm font-bold text-orange-800 mt-2">
-                {formatEuro((ergebnisse.lmsJahreslaufend || 0) + ((ergebnisse.lmsAnschaffung || 0) / betrachtungszeitraum))}
+                {formatEuro((ergebnisse.lmsJahreslaufend || 0) + ((ergebnisse.lmsAnschaffung || 0) / betrachtungszeitraum), waehrung)}
               </div>
             </div>
           </div>
@@ -87,9 +87,9 @@ export default function ErgebnisPanel({ ergebnisse, betrachtungszeitraum, entlas
               <span className="show-text-on-large"> (Kosten/Person/Jahr)</span>
             </span>
             <div className="key-metric-values">
-              <span className="font-bold text-blue-600">{formatEuro(ergebnisse.kostenProTeilnehmerTraditionellJahr || 0)}</span>
+              <span className="font-bold text-blue-600">{formatEuro(ergebnisse.kostenProTeilnehmerTraditionellJahr || 0, waehrung)}</span>
               {/* Slash entfernt, Abstand zum nächsten Wert hinzugefügt */}
-              <span className="font-bold text-orange-600 ml-2">{formatEuro(ergebnisse.kostenProTeilnehmerLMSJahr || 0)}</span>
+              <span className="font-bold text-orange-600 ml-2">{formatEuro(ergebnisse.kostenProTeilnehmerLMSJahr || 0, waehrung)}</span>
             </div>
           </div>
         </div>

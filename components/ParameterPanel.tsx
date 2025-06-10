@@ -46,7 +46,9 @@ export default function ParameterPanel({
   entwicklerStundensatz,
   setEntwicklerStundensatz,
   contentPauschaleJahrGesamt,
-  setContentPauschaleJahrGesamt
+  setContentPauschaleJahrGesamt,
+  waehrung,
+  setWaehrung
 }) {
 
   const calculateRaumkostenRange = (currentMaxTeilnehmer) => {
@@ -96,10 +98,26 @@ export default function ParameterPanel({
   return (
     <div className="grow-[2]"> {/* Nimmt flexibel Platz (doppelt so viel wie ErgebnisPanel) */}
       <div className="parameter-panel">
-        <h2 className="text-xl font-bold text-gray-800 mb-6 flex items-center">
-          <span className="mr-2 text-blue-600">👥</span>
-          Ihre Unternehmensdaten
-        </h2>
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-xl font-bold text-gray-800 flex items-center">
+            <span className="mr-2 text-blue-600">👥</span>
+            Ihre Unternehmensdaten
+          </h2>
+          <div className="flex space-x-1">
+            {['EUR', 'CHF'].map(w => (
+              <button
+                key={w}
+                onClick={() => setWaehrung(w)}
+                className={`px-3 py-1 text-xs font-medium rounded-md focus:outline-none
+                  ${waehrung === w 
+                    ? 'bg-blue-600 text-white' 
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+              >
+                {w}
+              </button>
+            ))}
+          </div>
+        </div>
 
         {/* Haupteingabe */}
         <div className="mb-6 p-4 bg-blue-50 rounded-lg">
@@ -179,7 +197,7 @@ export default function ParameterPanel({
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-700 mb-2 block">
-                  Raumkosten pro Tag: {formatEuro(raumkostenProTag)}
+                  Raumkosten pro Tag: {formatEuro(raumkostenProTag, waehrung)}
                   <Tooltip id="raumkostenProTag" />
                 </label>
                 <input
@@ -192,13 +210,13 @@ export default function ParameterPanel({
                   className="slider-blue"
                 />
                 <div className="flex justify-between text-xs text-gray-500 mt-1 px-1">
-                  <span>{formatEuro(currentRaumkostenRange.min)}</span>
-                  <span>{formatEuro(currentRaumkostenRange.max)}</span>
+                  <span>{formatEuro(currentRaumkostenRange.min, waehrung)}</span>
+                  <span>{formatEuro(currentRaumkostenRange.max, waehrung)}</span>
                 </div>
               </div>
               <div>
                 <label className="flex items-center text-sm font-medium text-gray-700 mb-2">
-                  Tagessatz Training: {formatEuro(trainerTagessatz)}
+                  Tagessatz Training: {formatEuro(trainerTagessatz, waehrung)}
                   <Tooltip id="trainerTagessatz" />
                 </label>
                 <input
@@ -211,8 +229,8 @@ export default function ParameterPanel({
                   className="slider-blue"
                 />
                 <div className="flex justify-between text-xs text-gray-500 mt-1 px-1">
-                  <span>{formatEuro(600)}</span>
-                  <span>{formatEuro(1800)}</span>
+                  <span>{formatEuro(600, waehrung)}</span>
+                  <span>{formatEuro(1800, waehrung)}</span>
                 </div>
               </div>
               {/* Globaler Schulungsdauer-Slider wird entfernt */}
@@ -236,7 +254,7 @@ export default function ParameterPanel({
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-700 mb-2 block">
-                  Fahrtkosten: {formatEuro(fahrtkosten)}
+                  Fahrtkosten: {formatEuro(fahrtkosten, waehrung)}
                 </label>
                 <input
                   type="range"
@@ -248,8 +266,8 @@ export default function ParameterPanel({
                   className="slider-blue"
                 />
                 <div className="flex justify-between text-xs text-gray-500 mt-1 px-1">
-                  <span>{formatEuro(50)}</span>
-                  <span>{formatEuro(250)}</span>
+                  <span>{formatEuro(50, waehrung)}</span>
+                  <span>{formatEuro(250, waehrung)}</span>
                 </div>
               </div>
               <div>
@@ -260,7 +278,7 @@ export default function ParameterPanel({
                     onChange={(e) => setBeruecksichtigeAusfallzeiten(e.target.checked)}
                     className="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                   />
-                  Stundensatz Mitarbeitende: {beruecksichtigeAusfallzeiten ? formatEuro(mitarbeiterStundensatz) : 'nicht berücksichtigt'}
+                  Stundensatz Mitarbeitende: {beruecksichtigeAusfallzeiten ? formatEuro(mitarbeiterStundensatz, waehrung) : 'nicht berücksichtigt'}
                 </label>
                 <input
                   type="range"
@@ -275,7 +293,7 @@ export default function ParameterPanel({
                 <div className={`flex justify-between text-xs text-gray-500 mt-1 px-1 ${!beruecksichtigeAusfallzeiten ? 'opacity-50' : ''}`}>
                   {mitarbeiterStundensatzSkala.map(val => (
                     <span key={val} className={`text-center ${val === mitarbeiterStundensatz && beruecksichtigeAusfallzeiten ? 'font-bold text-blue-600' : ''}`}>
-                      {formatEuro(val)}
+                      {formatEuro(val, waehrung)}
                     </span>
                   ))}
                 </div>
@@ -301,7 +319,7 @@ export default function ParameterPanel({
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-700 mb-2 block">
-                  LMS-Anschaffung: {formatEuro(lmsAnschaffung)}
+                  LMS-Anschaffung: {formatEuro(lmsAnschaffung, waehrung)}
                 </label>
                 <input
                   type="range"
@@ -313,13 +331,13 @@ export default function ParameterPanel({
                   className="slider-orange"
                 />
                 <div className="flex justify-between text-xs text-gray-500 mt-1 px-1">
-                  <span>{formatEuro(0)}</span>
-                  <span>{formatEuro(12000)}</span>
+                  <span>{formatEuro(0, waehrung)}</span>
+                  <span>{formatEuro(12000, waehrung)}</span>
                 </div>
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-700 mb-2 block">
-                  LMS-Hosting/Jahr: {formatEuro(lmsHostingJahr)}
+                  LMS-Hosting/Jahr: {formatEuro(lmsHostingJahr, waehrung)}
                 </label>
                 <input
                   type="range"
@@ -331,8 +349,8 @@ export default function ParameterPanel({
                   className="slider-orange"
                 />
                 <div className="flex justify-between text-xs text-gray-500 mt-1 px-1">
-                  <span>{formatEuro(0)}</span>
-                  <span>{formatEuro(12000)}</span>
+                  <span>{formatEuro(0, waehrung)}</span>
+                  <span>{formatEuro(12000, waehrung)}</span>
                 </div>
               </div>
             </div>
@@ -416,7 +434,7 @@ export default function ParameterPanel({
                               min="0"
                               max="200"
                             />
-                            <span className="text-sm text-gray-600">€/Person</span>
+                            <span className="text-sm text-gray-600">{waehrung}/Person</span>
                           </div>
                         </div>
                       )}
@@ -482,9 +500,9 @@ export default function ParameterPanel({
                   <div className="space-y-4 p-3 bg-gray-50 rounded-lg">
                      <p className="text-xs text-gray-600">Definieren Sie oben pro Thema die Erstellungs- und Pflegeaufwände. Hier der globale Stundensatz dafür.</p>
                     <div>
-                      <label className="text-sm font-medium text-gray-700 mb-1 block">Stundensatz Entwicklung: {formatEuro(entwicklerStundensatz)}</label>
+                      <label className="text-sm font-medium text-gray-700 mb-1 block">Stundensatz Entwicklung: {formatEuro(entwicklerStundensatz, waehrung)}</label>
                       <input type="range" min="30" max="150" step="5" value={entwicklerStundensatz} onChange={(e) => setEntwicklerStundensatz(parseInt(e.target.value))} className="slider-orange" />
-                      <div className="flex justify-between text-xs text-gray-500 mt-1 px-1"><span>{formatEuro(30)}</span><span>{formatEuro(150)}</span></div>
+                      <div className="flex justify-between text-xs text-gray-500 mt-1 px-1"><span>{formatEuro(30, waehrung)}</span><span>{formatEuro(150, waehrung)}</span></div>
                     </div>
                   </div>
                 )}
@@ -493,9 +511,9 @@ export default function ParameterPanel({
                   <div className="space-y-4 p-3 bg-gray-50 rounded-lg">
                     <p className="text-xs text-gray-600">Geben Sie hier eine jährliche Pauschale für alle Online-Unterweisungen an. Die oben definierten Themen (Name & Dauer) sind weiterhin für die Berechnung der Ausfallzeiten relevant.</p>
                     <div>
-                      <label className="text-sm font-medium text-gray-700 mb-1 block">Content-Pauschale (jährlich): {formatEuro(contentPauschaleJahrGesamt)}</label>
+                      <label className="text-sm font-medium text-gray-700 mb-1 block">Content-Pauschale (jährlich): {formatEuro(contentPauschaleJahrGesamt, waehrung)}</label>
                       <input type="range" min="0" max="10000" step="100" value={contentPauschaleJahrGesamt} onChange={(e) => setContentPauschaleJahrGesamt(parseInt(e.target.value))} className="slider-orange" />
-                      <div className="flex justify-between text-xs text-gray-500 mt-1 px-1"><span>{formatEuro(0)}</span><span>{formatEuro(10000)}</span></div>
+                      <div className="flex justify-between text-xs text-gray-500 mt-1 px-1"><span>{formatEuro(0, waehrung)}</span><span>{formatEuro(10000, waehrung)}</span></div>
                     </div>
                   </div>
                 )}

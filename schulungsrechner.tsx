@@ -38,6 +38,8 @@ export default function LernlinkKostenrechner() {
   const [entwicklerStundensatz, setEntwicklerStundensatz] = useState(75);
   const [contentPauschaleJahrGesamt, setContentPauschaleJahrGesamt] = useState(1000);
 
+  const [waehrung, setWaehrung] = useState('EUR'); // Neuer State für Währung
+
   const [ergebnisse, setErgebnisse] = useState({});
 
   useEffect(() => {
@@ -69,7 +71,7 @@ export default function LernlinkKostenrechner() {
     mitarbeiter, unterweisungen, maxTeilnehmer, trainerTagessatz, anreiseAnteil, fahrtkosten, 
     mitarbeiterStundensatz, entlastungsfaktor, lmsAnschaffung, lmsHostingJahr, betrachtungszeitraum, 
     raumkostenProTag, beruecksichtigeAusfallzeiten, contentKostenModus, 
-    entwicklerStundensatz, contentPauschaleJahrGesamt // Abhängigkeiten aktualisiert
+    entwicklerStundensatz, contentPauschaleJahrGesamt, waehrung // Abhängigkeiten aktualisiert
   ]);
   // unterweisungsDauer aus den Dependencies entfernt
 
@@ -119,11 +121,14 @@ export default function LernlinkKostenrechner() {
             setEntwicklerStundensatz={setEntwicklerStundensatz}
             contentPauschaleJahrGesamt={contentPauschaleJahrGesamt}
             setContentPauschaleJahrGesamt={setContentPauschaleJahrGesamt}
+            waehrung={waehrung} // Prop hinzufügen
+            setWaehrung={setWaehrung} // Prop hinzufügen
           />
           <ErgebnisPanel 
             ergebnisse={ergebnisse} 
             betrachtungszeitraum={betrachtungszeitraum}
             entlastungsfaktor={entlastungsfaktor}
+            waehrung={waehrung} // Prop hinzufügen
           />
         </div>
         
@@ -146,6 +151,7 @@ export default function LernlinkKostenrechner() {
           // contentErstellungsStundenGesamt, contentPflegeStundenJahrGesamt entfernt
           entwicklerStundensatz={entwicklerStundensatz}
           contentPauschaleJahrGesamt={contentPauschaleJahrGesamt}
+          waehrung={waehrung} // Prop hinzufügen
         />
       </div>
       
