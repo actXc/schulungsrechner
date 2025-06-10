@@ -106,7 +106,7 @@ export default function DetailAnalyse({
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <div className="w-4 h-4 bg-blue-700 rounded"></div>
-                <span>Trainer-Kosten ({ergebnisse.gesamteDurchgaenge || 0} Einsätze):</span>
+                <span>Kosten Trainingsleitung ({ergebnisse.gesamteDurchgaenge || 0} Einsätze):</span>
               </div>
               <span className="font-medium">{formatEuro(ergebnisse.trainerKosten || 0)}</span>
             </div>
@@ -158,7 +158,7 @@ export default function DetailAnalyse({
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <div className="w-4 h-4 bg-orange-700 rounded"></div>
-                  <span>Content-Kosten (Kauf pro MA):</span>
+                  <span>Content-Kosten (Kauf pro Person):</span>
                 </div>
                 <span className="font-medium">{formatEuro(ergebnisse.contentKostenKaufen || 0)}</span>
               </div>
@@ -195,7 +195,7 @@ export default function DetailAnalyse({
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <div className="w-4 h-4 bg-orange-500 rounded"></div>
-                  <span>Zusatzkosten (&gt;300 MA):</span>
+                  <span>Zusatzkosten (&gt;300 Personen):</span>
                 </div>
                 <span className="font-medium">{formatEuro(ergebnisse.lmsZusatz || 0)}</span>
               </div>
@@ -259,16 +259,16 @@ export default function DetailAnalyse({
       <div className="mt-8 p-6 bg-gray-50 rounded-lg border-l-4 border-blue-600">
         <h4 className="text-base font-semibold text-gray-800 mb-4">📊 Verwendete Parameter</h4>
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 text-sm text-gray-600">
-          <div><strong>Mitarbeiter:</strong> {mitarbeiter}</div>
+          <div><strong>Mitarbeitende:</strong> {mitarbeiter}</div>
           <div><strong>Betrachtungszeitraum:</strong> {betrachtungszeitraum} Jahre</div>
           <div><strong>Unterweisungen:</strong> {unterweisungen.length} Themen</div>
           <div><strong>Gruppengröße Präsenz:</strong> {maxTeilnehmer} Personen</div>
-          <div><strong>Trainer-Tagessatz:</strong> {formatEuro(trainerTagessatz)}</div>
+          <div><strong>Tagessatz Training:</strong> {formatEuro(trainerTagessatz)}</div>
           <div><strong>Gesamtschulungsdauer/Jahr:</strong> {unterweisungen.reduce((sum, u) => sum + u.dauer, 0)}h</div>
           <div><strong>Anreiseanteil:</strong> {anreiseAnteil}%</div>
           <div><strong>Fahrtkosten:</strong> {formatEuro(fahrtkosten)}</div>
           <div><strong>Raumkosten/Tag:</strong> {formatEuro(ergebnisse.raumkostenProTagParameter || 0)}</div>
-          <div><strong>MA-Stundensatz:</strong> {beruecksichtigeAusfallzeiten ? formatEuro(mitarbeiterStundensatz) : 'Nicht berücksichtigt'}</div>
+          <div><strong>Stundensatz Mitarbeitende:</strong> {beruecksichtigeAusfallzeiten ? formatEuro(mitarbeiterStundensatz) : 'Nicht berücksichtigt'}</div>
           <div><strong>Zeitersparnis Online:</strong> {entlastungsfaktor}%</div>
           <div><strong>LMS-Anschaffung:</strong> {formatEuro(lmsAnschaffung)}</div>
           <div><strong>LMS-Hosting/Jahr:</strong> {formatEuro(lmsHostingJahr)}</div>
@@ -279,7 +279,7 @@ export default function DetailAnalyse({
           <div className="col-span-full pt-2 border-t border-gray-300 text-xs">
             <strong>Unterweisungsthemen (Name & Dauer):</strong> {unterweisungen.map(u => `${u.name} (${u.dauer}h)`).join(', ')}
             {ergebnisse.contentKostenModusParameter === 'kaufen' && (
-              <span className="block mt-1"><strong>Kosten pro Thema/MA (Modus "Kaufen"):</strong> {unterweisungen.map(u => `${u.name} (${formatEuro(u.kosten)})`).join(', ')}</span>
+              <span className="block mt-1"><strong>Kosten pro Thema/Person (Modus "Kaufen"):</strong> {unterweisungen.map(u => `${u.name} (${formatEuro(u.kosten)})`).join(', ')}</span>
             )}
             {ergebnisse.contentKostenModusParameter === 'machen' && (
               <span className="block mt-1"><strong>Erstellung/Pflege (Modus "Machen"):</strong> {unterweisungen.map(u => `${u.name} (${u.erstellungsStunden || 0}h Einm. / ${u.pflegeStundenJahr || 0}h Jahr)`).join(', ')}</span>

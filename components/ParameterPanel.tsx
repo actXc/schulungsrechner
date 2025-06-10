@@ -104,7 +104,7 @@ export default function ParameterPanel({
         {/* Haupteingabe */}
         <div className="mb-6 p-4 bg-blue-50 rounded-lg">
           <label className="flex items-center text-lg font-semibold text-gray-700 mb-3">
-            Anzahl Mitarbeiter: {mitarbeiter}
+            Anzahl Mitarbeitende: {mitarbeiter}
             <Tooltip id="mitarbeiter" />
           </label>
           <input
@@ -198,7 +198,7 @@ export default function ParameterPanel({
               </div>
               <div>
                 <label className="flex items-center text-sm font-medium text-gray-700 mb-2">
-                  Trainer-Tagessatz: {formatEuro(trainerTagessatz)}
+                  Tagessatz Training: {formatEuro(trainerTagessatz)}
                   <Tooltip id="trainerTagessatz" />
                 </label>
                 <input
@@ -260,7 +260,7 @@ export default function ParameterPanel({
                     onChange={(e) => setBeruecksichtigeAusfallzeiten(e.target.checked)}
                     className="mr-2 h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                   />
-                  MA-Stundensatz: {beruecksichtigeAusfallzeiten ? formatEuro(mitarbeiterStundensatz) : 'nicht berücksichtigt'}
+                  Stundensatz Mitarbeitende: {beruecksichtigeAusfallzeiten ? formatEuro(mitarbeiterStundensatz) : 'nicht berücksichtigt'}
                 </label>
                 <input
                   type="range"
@@ -395,10 +395,10 @@ export default function ParameterPanel({
                         </select>
                       </div>
 
-                      {/* Modus "kaufen": Kosten pro MA */}
+                      {/* Modus "kaufen": Kosten pro Person */}
                       {contentKostenModus === 'kaufen' && (
                         <div className="w-full md:w-auto">
-                          <label htmlFor={`kosten-${index}`} className="text-sm font-medium text-gray-700 mb-1 block md:sr-only">Kosten pro Thema/MA</label>
+                          <label htmlFor={`kosten-${index}`} className="text-sm font-medium text-gray-700 mb-1 block md:sr-only">Kosten pro Thema/Person</label>
                           <div className="flex items-center gap-2">
                             <input
                               id={`kosten-${index}`}
@@ -409,7 +409,7 @@ export default function ParameterPanel({
                               min="0"
                               max="200"
                             />
-                            <span className="text-sm text-gray-600">€/MA</span>
+                            <span className="text-sm text-gray-600">€/Person</span>
                           </div>
                         </div>
                       )}
@@ -475,7 +475,7 @@ export default function ParameterPanel({
                   <div className="space-y-4 p-3 bg-gray-50 rounded-lg">
                      <p className="text-xs text-gray-600">Definieren Sie oben pro Thema die Erstellungs- und Pflegeaufwände. Hier der globale Stundensatz dafür.</p>
                     <div>
-                      <label className="text-sm font-medium text-gray-700 mb-1 block">Stundensatz Entwickler: {formatEuro(entwicklerStundensatz)}</label>
+                      <label className="text-sm font-medium text-gray-700 mb-1 block">Stundensatz Entwicklung: {formatEuro(entwicklerStundensatz)}</label>
                       <input type="range" min="30" max="150" step="5" value={entwicklerStundensatz} onChange={(e) => setEntwicklerStundensatz(parseInt(e.target.value))} className="slider-orange" />
                       <div className="flex justify-between text-xs text-gray-500 mt-1 px-1"><span>{formatEuro(30)}</span><span>{formatEuro(150)}</span></div>
                     </div>
